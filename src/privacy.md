@@ -18,9 +18,10 @@ You can check this yourself: load a converter, switch off your internet connecti
 ## What the site stores on your device
 
 - **Your colour theme.** If you switch between light and dark mode, that choice is saved in your browser's local storage so it stays the same next time.
+- **A conversion count.** The number shown at the bottom of every page ("Converted on this device") is a simple count of how many files you have converted. It is stored in your browser's local storage, contains no file names or details, and is never sent anywhere.
 - **A copy of the site's code.** The site's pages, styles, scripts and the converter libraries you use are kept in your browser's cache, so they load faster and work offline. This contains code only, never your files.
 
-You can remove both at any time by clearing this site's data in your browser settings.
+You can remove all of these at any time by clearing this site's data in your browser settings.
 
 WrenConvert does not use cookies, does not ask you to sign in, and does not fingerprint your browser.
 

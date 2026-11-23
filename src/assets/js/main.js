@@ -199,6 +199,20 @@
   });
   window.addEventListener('resize', placePop);
 
+  // ---------- Local conversion counter (footer) ----------
+  // Counts files converted in this browser. Stored in localStorage only; never sent anywhere.
+  const COUNT_KEY = 'wren-converted';
+  const readCount = () => { try { return Math.max(0, parseInt(localStorage.getItem(COUNT_KEY), 10) || 0); } catch (e) { return 0; } };
+  const showCount = (n) => $$('[data-count-converted]').forEach((el) => (el.textContent = n.toLocaleString()));
+  const addToCount = (n) => {
+    if (!n) return;
+    const total = readCount() + n;
+    try { localStorage.setItem(COUNT_KEY, String(total)); } catch (e) { /* private mode: still show this visit */ }
+    showCount(total);
+    $$('[data-file-counter]').forEach((el) => { el.classList.remove('is-bumped'); void el.offsetWidth; el.classList.add('is-bumped'); });
+  };
+  showCount(readCount());
+
   // ---------- Converter widgets ----------
   const fmtSize = (b) => (b < 1024 * 1024 ? `${Math.max(1, Math.round(b / 1024))} KB` : `${(b / 1024 / 1024).toFixed(1)} MB`);
   const extOf = (name) => {
@@ -534,6 +548,7 @@
       btn.disabled = false;
       render();
       const ok = items.filter((it) => it.state === 'done').length;
+      addToCount(todo.filter((it) => it.state === 'done').length);
       if (ok) results.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     };
 

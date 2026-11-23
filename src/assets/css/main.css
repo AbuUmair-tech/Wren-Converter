@@ -631,3 +631,14 @@ tbody th { font-weight: 600; color: var(--muted); white-space: nowrap; }
 .faq-list details[open] summary { color: var(--accent-ink); }
 .site-footer .footer-bottom a { color: inherit; }
 .page-hero + .prose-wrap { padding-top: 8px; border-top: 0; }
+
+.footer-badge b { font-weight: 800; font-variant-numeric: tabular-nums; }
+.footer-badge.is-bumped b:first-child { animation: bump .5s ease; }
+@keyframes bump { 40% { color: var(--accent); transform: scale(1.25); } }
+.footer-badge b { display: inline-block; }
+.footer-sister { font-size: .88rem !important; margin-top: 10px !important; }
+.footer-sister a { color: var(--accent-ink); font-weight: 600; }
+@media (prefers-reduced-motion: reduce) { .footer-badge.is-bumped b:first-child { animation: none; } }
+.footer-badge { align-items: flex-start !important; }
+.footer-badge .icon { margin-top: 3px; }
+.footer-badge > span { display: grid; gap: 2px; }

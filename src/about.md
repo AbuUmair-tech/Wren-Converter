@@ -15,6 +15,8 @@ Browsers today are fast enough to do the converting themselves. So every tool on
 
 I'm {{ site.author }}, a software developer. WrenConvert is a small independent project that I build and look after myself. There is no company, investor or data business behind it.
 
+I also run [ToolsBuilt](https://toolsbuilt.com/), a collection of free calculators and everyday tools such as GPA and grade calculators, date tools and text utilities. Like WrenConvert, it works in your browser without sign-ups.
+
 If something is wrong on the site, a conversion fails, or you want a format added, [email me]({{ "/contact/" }}).
 
 ## What it can do today
