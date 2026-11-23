@@ -1,0 +1,156 @@
+{
+  "ARW": {
+    "full": "Sony Alpha RAW",
+    "by": "Sony",
+    "type": "Camera RAW",
+    "best": "Editing photos from Sony cameras",
+    "support": "RAW editors"
+  },
+  "AVIF": {
+    "full": "AV1 Image File Format",
+    "by": "Alliance for Open Media, 2019",
+    "type": "Lossy or lossless, very small files",
+    "best": "Modern websites",
+    "support": "Modern browsers, few desktop apps"
+  },
+  "BMP": {
+    "full": "Bitmap",
+    "by": "Microsoft",
+    "type": "Uncompressed, large files",
+    "best": "Old Windows software",
+    "support": "Everywhere, but wasteful"
+  },
+  "CR2": {
+    "full": "Canon RAW 2",
+    "by": "Canon",
+    "type": "Camera RAW",
+    "best": "Editing photos from older Canon cameras",
+    "support": "RAW editors"
+  },
+  "CR3": {
+    "full": "Canon RAW 3",
+    "by": "Canon, 2018",
+    "type": "Camera RAW",
+    "best": "Editing photos from newer Canon cameras",
+    "support": "Recent RAW editors"
+  },
+  "DNG": {
+    "full": "Digital Negative",
+    "by": "Adobe, 2004",
+    "type": "Open camera RAW",
+    "best": "Archiving RAW photos; some phones shoot it",
+    "support": "RAW editors"
+  },
+  "GIF": {
+    "full": "Graphics Interchange Format",
+    "by": "CompuServe, 1987",
+    "type": "256 colours, animation",
+    "best": "Simple animations",
+    "support": "Everywhere"
+  },
+  "HEIC": {
+    "full": "High Efficiency Image Container",
+    "by": "Apple (iPhone default since iOS 11)",
+    "type": "Lossy, very small files",
+    "best": "Storing photos on Apple devices",
+    "support": "Limited outside Apple"
+  },
+  "HEIF": {
+    "full": "High Efficiency Image File Format",
+    "by": "MPEG, 2015",
+    "type": "Lossy, very small files",
+    "best": "Photos from newer phones and cameras",
+    "support": "Limited outside Apple"
+  },
+  "ICO": {
+    "full": "Windows Icon",
+    "by": "Microsoft",
+    "type": "Several sizes in one file",
+    "best": "Favicons and Windows icons",
+    "support": "Browsers and Windows"
+  },
+  "JFIF": {
+    "full": "JPEG File Interchange Format",
+    "by": "C-Cube Microsystems, 1992",
+    "type": "Lossy (it is a JPEG with a different file ending)",
+    "best": "Same uses as JPG",
+    "support": "Most apps, once renamed to .jpg"
+  },
+  "JPG": {
+    "full": "Joint Photographic Experts Group",
+    "by": "JPEG committee, 1992",
+    "type": "Lossy",
+    "best": "Photos you want to share anywhere",
+    "support": "Everywhere"
+  },
+  "NEF": {
+    "full": "Nikon Electronic Format",
+    "by": "Nikon",
+    "type": "Camera RAW",
+    "best": "Editing photos from Nikon cameras",
+    "support": "RAW editors"
+  },
+  "ORF": {
+    "full": "Olympus RAW Format",
+    "by": "Olympus / OM System",
+    "type": "Camera RAW",
+    "best": "Editing photos from Olympus cameras",
+    "support": "RAW editors"
+  },
+  "PDF": {
+    "full": "Portable Document Format",
+    "by": "Adobe, 1993",
+    "type": "Document container",
+    "best": "Printing and sending documents",
+    "support": "Everywhere"
+  },
+  "PNG": {
+    "full": "Portable Network Graphics",
+    "by": "W3C, 1996",
+    "type": "Lossless, supports transparency",
+    "best": "Screenshots, logos, graphics with text",
+    "support": "Everywhere"
+  },
+  "PSD": {
+    "full": "Photoshop Document",
+    "by": "Adobe, 1990",
+    "type": "Layers, lossless",
+    "best": "Editing in Photoshop",
+    "support": "Photoshop and a few editors"
+  },
+  "RW2": {
+    "full": "Panasonic RAW 2",
+    "by": "Panasonic",
+    "type": "Camera RAW",
+    "best": "Editing photos from Panasonic cameras",
+    "support": "RAW editors"
+  },
+  "SVG": {
+    "full": "Scalable Vector Graphics",
+    "by": "W3C, 2001",
+    "type": "Vector, scales without blur",
+    "best": "Logos and icons",
+    "support": "Browsers and design apps"
+  },
+  "TGA": {
+    "full": "Truevision Graphics Adapter",
+    "by": "Truevision, 1984",
+    "type": "Lossless, transparency",
+    "best": "Game textures and video work",
+    "support": "Graphics and game tools"
+  },
+  "TIFF": {
+    "full": "Tagged Image File Format",
+    "by": "Aldus (now Adobe), 1986",
+    "type": "Usually lossless, large files",
+    "best": "Printing, scanning and archiving",
+    "support": "Photo editors and print shops; not browsers"
+  },
+  "WEBP": {
+    "full": "WebP",
+    "by": "Google, 2010",
+    "type": "Lossy or lossless, transparency",
+    "best": "Web pages that need small images",
+    "support": "All modern browsers, some older apps lack it"
+  }
+}

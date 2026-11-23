@@ -1,0 +1,15 @@
+---
+layout: layouts/base.njk
+---
+<section class="page-hero">
+  <div class="container narrow">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a><span>/</span><span aria-current="page">{{ title }}</span></nav>
+    <h1>{{ title }}</h1>
+    {% if lede %}<p class="lede">{{ lede }}</p>{% endif %}
+  </div>
+</section>
+<article class="section prose-wrap">
+  <div class="container narrow prose">
+    {{ content | safe }}
+  </div>
+</article>

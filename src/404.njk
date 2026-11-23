@@ -1,0 +1,14 @@
+---
+layout: layouts/base.njk
+permalink: /404.html
+title: Page not found
+---
+{%- from "icons.njk" import wren -%}
+<section class="section not-found">
+  <div class="container narrow center">
+    {{ wren(96) }}
+    <h1>This page flew away</h1>
+    <p class="lede">The page you were looking for isn't here. Try one of the converters instead.</p>
+    <p><a class="btn btn-primary" href="/">Go home</a> <a class="btn" href="/tools/">All tools</a></p>
+  </div>
+</section>

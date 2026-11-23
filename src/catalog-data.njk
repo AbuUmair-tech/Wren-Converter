@@ -1,0 +1,8 @@
+---
+permalink: /assets/js/catalog.js
+eleventyExcludeFromCollections: true
+---
+{%- set pages = [] -%}
+{%- for t in tools %}{% if t.from %}{% set pages = (pages.push(t.slug), pages) %}{% endif %}{% endfor -%}
+window.WREN_CATALOG = {{ catalog | dump | safe }};
+window.WREN_PAGES = {{ pages | dump | safe }};

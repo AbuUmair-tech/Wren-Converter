@@ -1,0 +1,48 @@
+{#- Converter widget. Set `dz` before including: { from, to, picker, title, quality } -#}
+{%- from "icons.njk" import icon -%}
+{%- set usePicker = dz.picker !== false %}
+<div class="converter" data-converter data-mode="{{ dz.mode or 'convert' }}" data-from="{{ dz.from }}" data-to="{{ dz.to }}" data-page-slug="{{ dz.slug or '' }}">
+  <div class="picker-row">
+    {%- if usePicker %}
+    <span class="picker-word">Convert</span>
+    <button class="fmt-btn" type="button" data-fmt-btn="from" aria-haspopup="dialog" aria-expanded="false">
+      <span class="fmt-btn-cap">From</span>
+      <span class="fmt-btn-val" data-val>{{ dz.from | fmt }}</span>
+      <svg class="fmt-btn-chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+    </button>
+    <span class="picker-word">to</span>
+    <button class="fmt-btn fmt-btn-to" type="button" data-fmt-btn="to" aria-haspopup="dialog" aria-expanded="false">
+      <span class="fmt-btn-cap">To</span>
+      <span class="fmt-btn-val" data-val>{{ dz.to | fmt }}</span>
+      <svg class="fmt-btn-chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+    </button>
+    {%- else %}
+    <span class="picker-title">{{ icon(dz.icon or "shrink", 20) }} {{ dz.title }}</span>
+    {%- endif %}
+  </div>
+
+  <div class="dropzone" data-dropzone>
+    <input class="visually-hidden" type="file" multiple accept="image/*,.heic,.heif,.jfif,.tif,.tiff,.psd,.tga,.ico,.svg,.arw,.cr2,.cr3,.dng,.nef,.orf,.rw2" data-file-input tabindex="-1">
+    <span class="dz-icon" aria-hidden="true">{{ icon("upload", 30) }}</span>
+    <button class="btn btn-primary btn-lg" type="button" data-choose>{{ icon("file", 19) }} Choose files</button>
+    <p class="dz-title">or drop them here<span class="dz-paste">, or paste with <kbd>Ctrl</kbd> + <kbd>V</kbd></span></p>
+    <p class="dz-sub">{{ icon("lock", 13) }} Files stay on this device. Nothing is uploaded.</p>
+  </div>
+
+  <p class="pair-status" data-pair-status hidden></p>
+
+  <ul class="file-list" data-file-list hidden></ul>
+
+  <div class="converter-bar" data-bar hidden>
+    <div class="options" data-options></div>
+    <button class="btn btn-primary btn-go" type="button" data-convert>{{ icon("bolt", 18) }} <span data-go-label>{{ dz.verb or "Convert" }}</span></button>
+  </div>
+
+  <div class="results-bar" data-results hidden>
+    <span class="results-summary" data-results-summary></span>
+    <span class="results-actions">
+      <button class="btn" type="button" data-clear>Start over</button>
+      <button class="btn btn-primary" type="button" data-zip>{{ icon("download", 18) }} Download all (ZIP)</button>
+    </span>
+  </div>
+</div>

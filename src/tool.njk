@@ -1,0 +1,120 @@
+---
+layout: layouts/base.njk
+bodyClass: tool-page
+pagination:
+  data: tools
+  size: 1
+  alias: tool
+permalink: "/{{ tool.slug }}/"
+eleventyComputed:
+  title: "{% if tool.from %}{{ tool.from | fmt }} to {{ tool.to | fmt }} Converter{% else %}{{ tool.name }}{% endif %}: free, no upload"
+  description: "{{ tool.summary }}"
+---
+{%- from "icons.njk" import icon -%}
+{%- set cat = categories | bySlug(tool.category) %}
+{%- set fromInfo = formats[tool.from] if tool.from else null %}
+{%- set toInfo = formats[tool.to] if tool.to else null %}
+
+<section class="page-hero tool-hero">
+  <div class="container narrow">
+    <nav class="crumbs" aria-label="Breadcrumb">
+      <a href="/">Home</a><span>/</span><a href="/{{ cat.slug }}-converter/">{{ cat.title }}</a><span>/</span><span aria-current="page">{{ tool | toolName }}</span>
+    </nav>
+    <h1>{% if tool.from %}{{ tool.from | fmt }} to {{ tool.to | fmt }} Converter{% else %}{{ tool.name }}{% endif %}</h1>
+    <p class="lede">{{ tool.summary }}</p>
+    {%- if tool.from %}{% set dz = { from: tool.from, to: tool.to, slug: tool.slug } %}{% else %}{% set dz = { picker: false, mode: tool.action | lower, verb: tool.action, title: tool.name, icon: ("shrink" if tool.action == "Compress" else "maximize"), slug: tool.slug } %}{% endif %}
+    {% include "dropzone.njk" %}
+  </div>
+</section>
+
+<article class="section prose-wrap">
+  <div class="container narrow prose">
+    {%- if tool.from %}
+    <h2>How to convert {{ tool.from | fmt }} to {{ tool.to | fmt }}</h2>
+    <ol>
+      <li>Drop your {{ tool.from | fmt }} files into the box above, or tap <strong>choose files</strong>.</li>
+      <li>Check that <strong>{{ tool.to | fmt }}</strong> is selected, and move the quality slider if you want smaller files.</li>
+      <li>Press <strong>Convert</strong>, then download each file or all of them as a ZIP.</li>
+    </ol>
+
+    {%- if fromInfo and toInfo %}
+    <h2>{{ tool.from | fmt }} and {{ tool.to | fmt }} compared</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th scope="col"></th><th scope="col">{{ tool.from | fmt }}</th><th scope="col">{{ tool.to | fmt }}</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">Full name</th><td>{{ fromInfo.full }}</td><td>{{ toInfo.full }}</td></tr>
+          <tr><th scope="row">Made by</th><td>{{ fromInfo.by }}</td><td>{{ toInfo.by }}</td></tr>
+          <tr><th scope="row">Compression</th><td>{{ fromInfo.type }}</td><td>{{ toInfo.type }}</td></tr>
+          <tr><th scope="row">Best for</th><td>{{ fromInfo.best }}</td><td>{{ toInfo.best }}</td></tr>
+          <tr><th scope="row">Opens in</th><td>{{ fromInfo.support }}</td><td>{{ toInfo.support }}</td></tr>
+        </tbody>
+      </table>
+    </div>
+    {%- endif %}
+    {%- endif %}
+
+    {%- if tool.notes and tool.notes.length %}
+    <h2>Good to know</h2>
+    <ul class="notes">
+      {%- for n in tool.notes %}<li>{{ n }}</li>{% endfor %}
+    </ul>
+    {%- endif %}
+
+    <div class="callout">
+      {{ icon("lock", 20) }}
+      <div>
+        <strong>Your files stay on your device.</strong>
+        <p>This page converts files with code that runs in your browser. Nothing is uploaded, so it also works with your internet switched off once the page has loaded.</p>
+      </div>
+    </div>
+
+    <h2>Questions</h2>
+    {%- if tool.from %}
+    <details>
+      <summary>Is it safe to convert my {{ tool.from | fmt }} files here?</summary>
+      <p>Yes. The conversion runs inside your browser on your own device. Your files are never sent to a server, so nobody else can see them. You can even switch off your internet once this page has loaded.</p>
+    </details>
+    <details>
+      <summary>Can I convert many {{ tool.from | fmt }} files at once?</summary>
+      <p>Yes. Add as many as you like, up to 100 at a time, then download them one by one or all together as a ZIP file.</p>
+    </details>
+    <details>
+      <summary>Does it work on my phone?</summary>
+      <p>Yes, on iPhone, iPad and Android. Very large files may take longer on older phones because your phone does the work.</p>
+    </details>
+    {%- elif tool.action == "Compress" %}
+    <details>
+      <summary>How much smaller will my image get?</summary>
+      <p>Photos usually shrink by 50 to 80% at the default quality with no difference you can see. If you need a specific size, for example for an upload form, choose “Target size” and type the limit in KB.</p>
+    </details>
+    <details>
+      <summary>How does PNG compression work?</summary>
+      <p>PNG is lossless, so we make it smaller by reducing the number of colours, the same way tools like TinyPNG do. Most screenshots and graphics look identical with far fewer colours.</p>
+    </details>
+    {%- else %}
+    <details>
+      <summary>Will my image be stretched?</summary>
+      <p>No. If you type both a width and a height, the image is scaled to fit inside that box and keeps its shape. Type just one of them and the other is worked out for you.</p>
+    </details>
+    <details>
+      <summary>Can I resize many images at once?</summary>
+      <p>Yes. Every image you add gets the same settings, and you can download them all as a ZIP.</p>
+    </details>
+    {%- endif %}
+  </div>
+</article>
+
+<section class="section related">
+  <div class="container narrow">
+    <h2>Related tools</h2>
+    <ul class="chip-list">
+      {%- set shown = 0 %}
+      {%- for t in tools | inCategory(tool.category) %}
+      {%- if t.slug != tool.slug and shown < 14 and (t.popular or (tool.from and (t.from == tool.from or t.to == tool.to))) %}
+      {%- set shown = shown + 1 %}
+      <li><a href="/{{ t.slug }}/">{{ t | toolName }}</a></li>
+      {%- endif %}{% endfor %}
+    </ul>
+  </div>
+</section>

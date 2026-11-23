@@ -1,0 +1,50 @@
+---
+layout: layouts/base.njk
+permalink: /tools/
+title: All converters and tools
+description: Every file converter on WrenConvert. All of them run in your browser with no upload.
+---
+{%- from "icons.njk" import icon -%}
+<section class="page-hero">
+  <div class="container">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a><span>/</span><span aria-current="page">All tools</span></nav>
+    <h1>All tools</h1>
+    <p class="lede">Find a converter by format. More families are added as they are ready.</p>
+    <label class="search">
+      {{ icon("search", 18) }}
+      <span class="visually-hidden">Search tools</span>
+      <input type="search" placeholder="Try “heic” or “pdf”" data-tool-search autocomplete="off">
+    </label>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    {%- for cat in categories %}
+    {%- set catTools = tools | inCategory(cat.slug) %}
+    <div class="tool-group" data-group>
+      <h2><span class="cat-icon cat-{{ cat.slug }}">{{ icon(cat.icon, 18) }}</span> {{ cat.title }}
+        {%- if not catTools.length %} <em class="badge {% if cat.phase <= 4 %}{% else %}badge-muted{% endif %}">{% if cat.phase <= 4 %}Next{% else %}Later{% endif %}</em>{% endif %}</h2>
+      {%- if catTools.length %}
+      <ul class="chip-list">
+        {%- for t in catTools %}{% if not t.from %}<li data-item="{{ t.slug }} {{ t.name }}"><a href="/{{ t.slug }}/">{{ t | toolName }}</a></li>{% endif %}{% endfor %}
+      </ul>
+      {%- set catGroup = catalog.groups | bySlug(cat.slug) %}
+      <div class="pair-index">
+        {%- for f in catGroup.formats %}{% set fromTools = catTools | where("from", f) %}{% if fromTools.length %}
+        <div class="pair-index-row" data-row>
+          <h3><span class="fmt fmt-{{ f | lower }}">{{ f | fmt }}</span> to</h3>
+          <ul class="chip-list chip-list-sm">
+            {%- for t in fromTools %}<li data-item="{{ t.from }} to {{ t.to }} {{ t.slug }}"><a href="/{{ t.slug }}/">{{ t.to | fmt }}</a></li>{% endfor %}
+          </ul>
+        </div>
+        {%- endif %}{% endfor %}
+      </div>
+      {%- else %}
+      <p class="muted" data-item="{{ cat.examples | join(' ') }}">{{ cat.examples | join(", ") }} and more, coming soon.</p>
+      {%- endif %}
+    </div>
+    {%- endfor %}
+    <p class="muted" data-no-results hidden>No tool matches that yet.</p>
+  </div>
+</section>

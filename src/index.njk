@@ -1,0 +1,156 @@
+---
+layout: layouts/base.njk
+bodyClass: home
+---
+{%- from "icons.njk" import icon, wren -%}
+
+<section class="hero">
+  <div class="container hero-grid">
+    <div class="hero-copy">
+      <p class="eyebrow">{{ icon("lock", 15) }} Private by design</p>
+      <h1>Convert files<br><span class="accent">without uploading them.</span></h1>
+      <p class="lede">WrenConvert changes images, spreadsheets, fonts and audio from one format to another right inside your browser. Your files never travel to a server, so there is nothing to leak and nothing to wait for.</p>
+      <ul class="trust">
+        <li>{{ icon("check", 16) }} Free, no sign-up</li>
+        <li>{{ icon("check", 16) }} No file size queue</li>
+        <li>{{ icon("check", 16) }} Works offline once loaded</li>
+      </ul>
+    </div>
+    <div class="hero-tool">
+      {%- set dz = { from: "HEIC", to: "JPG" } %}
+      {% include "dropzone.njk" %}
+    </div>
+  </div>
+</section>
+
+<section class="section popular">
+  <div class="container">
+    <div class="section-head">
+      <h2>Popular conversions</h2>
+      <a class="more" href="/tools/">See all tools {{ icon("arrow", 16) }}</a>
+    </div>
+    <ul class="pair-grid">
+      {%- for t in tools | where("popular", true) %}
+      <li>
+        <a class="pair-card" href="/{{ t.slug }}/">
+          {%- if t.from %}
+          <span class="pair">
+            <span class="fmt fmt-{{ t.from | lower }}">{{ t.from | fmt }}</span>
+            {{ icon("arrow", 16) }}
+            <span class="fmt fmt-{{ t.to | lower }}">{{ t.to | fmt }}</span>
+          </span>
+          {%- else %}
+          <span class="pair"><span class="fmt fmt-action">{{ icon("shrink" if t.action == "Compress" else "maximize", 16) }} {{ t.action }}</span></span>
+          {%- endif %}
+          <span class="pair-name">{{ t | toolName }}</span>
+        </a>
+      </li>
+      {%- endfor %}
+    </ul>
+  </div>
+</section>
+
+<section class="section how">
+  <div class="container">
+    <div class="section-head center">
+      <p class="eyebrow">How it is different</p>
+      <h2>Most converters upload your file. We don't.</h2>
+      <p class="section-lede">Online converters usually send your photo or document to their server, convert it there and send it back. WrenConvert brings the converter to you instead.</p>
+    </div>
+
+    <div class="compare">
+      <figure class="compare-card is-them">
+        <figcaption>Typical online converter</figcaption>
+        <div class="flow" aria-hidden="true">
+          <span class="node">{{ icon("laptop", 26) }}<small>Your device</small></span>
+          <span class="wire"><i></i><b>upload</b></span>
+          <span class="node node-server">{{ icon("server", 26) }}<small>Their server</small></span>
+          <span class="wire wire-back"><i></i><b>download</b></span>
+          <span class="node">{{ icon("laptop", 26) }}<small>Your device</small></span>
+        </div>
+        <ul class="compare-list">
+          <li>Your file is copied to someone else's computer</li>
+          <li>Wait in a queue, then wait for the download</li>
+          <li>Size limits and daily caps to push paid plans</li>
+        </ul>
+      </figure>
+
+      <figure class="compare-card is-us">
+        <figcaption>{{ wren(22) }} WrenConvert</figcaption>
+        <div class="flow" aria-hidden="true">
+          <span class="node node-us">{{ icon("laptop", 26) }}<small>Your device does the work</small></span>
+        </div>
+        <ul class="compare-list">
+          <li>The file is read and converted in this browser tab</li>
+          <li>Starts at once, as fast as your device allows</li>
+          <li>No account, no caps, no watermark</li>
+        </ul>
+      </figure>
+    </div>
+
+    <ol class="steps">
+      <li><span class="step-n">1</span><h3>Add your files</h3><p>Drop them on the page or pick them from your phone or computer.</p></li>
+      <li><span class="step-n">2</span><h3>Pick the format</h3><p>Choose what you need, and adjust quality or size if you like.</p></li>
+      <li><span class="step-n">3</span><h3>Save the result</h3><p>Download each file, or all of them together as a ZIP.</p></li>
+    </ol>
+  </div>
+</section>
+
+<section class="section cats">
+  <div class="container">
+    <div class="section-head">
+      <h2>Everything we convert</h2>
+      <p class="section-lede">We are starting with images and adding a new family of formats at a time.</p>
+    </div>
+    <ul class="cat-grid">
+      {%- for cat in categories %}
+      {%- set live = cat.phase <= 4 %}
+      <li>
+        <a class="cat-card{% if not live %} is-later{% endif %}" href="/{{ cat.slug }}-converter/">
+          <span class="cat-icon cat-{{ cat.slug }}">{{ icon(cat.icon, 22) }}</span>
+          <span class="cat-body">
+            <span class="cat-title">{{ cat.title }}
+              {%- if cat.phase == 1 %}<em class="badge badge-new">First up</em>
+              {%- elif live %}<em class="badge">Next</em>
+              {%- else %}<em class="badge badge-muted">Later</em>{% endif %}
+            </span>
+            <span class="cat-blurb">{{ cat.blurb }}</span>
+            <span class="cat-formats">{% for f in cat.examples %}<span>{{ f | fmt }}</span>{% endfor %}</span>
+          </span>
+        </a>
+      </li>
+      {%- endfor %}
+    </ul>
+  </div>
+</section>
+
+<section class="section why">
+  <div class="container why-grid">
+    <div class="why-item">{{ icon("lock", 24) }}<h3>Private</h3><p>No upload means no copy of your file on anyone's server. Close the tab and it is gone.</p></div>
+    <div class="why-item">{{ icon("bolt", 24) }}<h3>Fast</h3><p>No upload or download time. Big batches start converting the moment you drop them.</p></div>
+    <div class="why-item">{{ icon("wifi-off", 24) }}<h3>Works offline</h3><p>Once the page has loaded, you can switch off Wi-Fi and keep converting.</p></div>
+    <div class="why-item">{{ icon("gift", 24) }}<h3>Free</h3><p>No account, no daily limit, no watermark on your images.</p></div>
+  </div>
+</section>
+
+<section class="section faq">
+  <div class="container narrow">
+    <h2>Questions</h2>
+    <details>
+      <summary>Is it really free?</summary>
+      <p>Yes. Because your own device does the converting, we have no server bills per file, so there is no reason to charge per file or limit how many you convert.</p>
+    </details>
+    <details>
+      <summary>How can I check that my files are not uploaded?</summary>
+      <p>Load a converter, turn off your internet connection, then convert a file. It still works, because nothing needs to be sent anywhere.</p>
+    </details>
+    <details>
+      <summary>Is there a file size limit?</summary>
+      <p>Only your device's memory. Most phones and computers handle photos and spreadsheets of any normal size easily. Very large files may be slower on older phones.</p>
+    </details>
+    <details>
+      <summary>Which formats are coming next?</summary>
+      <p>Images first, then spreadsheets, fonts and audio. Video, archives, PDF tools and documents follow after that.</p>
+    </details>
+  </div>
+</section>

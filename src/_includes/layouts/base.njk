@@ -1,0 +1,93 @@
+{%- from "icons.njk" import icon, wren -%}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% if title %}{{ title }} | {{ site.name }}{% else %}{{ site.name }}: {{ site.tagline }}{% endif %}</title>
+  <meta name="description" content="{{ description or site.description }}">
+  <link rel="canonical" href="{{ site.url }}{{ page.url }}">
+  <link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="/assets/fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/assets/css/main.css">
+  <meta name="theme-color" content="#fbf8f3" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#16130f" media="(prefers-color-scheme: dark)">
+  <script>try{var t=localStorage.getItem('theme');if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
+</head>
+<body class="{{ bodyClass }}">
+  <a class="skip" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="container header-row">
+      <a class="brand" href="/" aria-label="{{ site.name }} home">
+        {{ wren(34) }}<span>Wren<b>Convert</b></span>
+      </a>
+
+      <nav class="main-nav" id="main-nav" aria-label="Main">
+        <ul>
+          {%- for slug in ["image", "spreadsheet", "font", "audio"] %}
+          {%- set cat = categories | bySlug(slug) %}
+          <li><a href="/{{ cat.slug }}-converter/"{% if page.url == "/" + cat.slug + "-converter/" %} aria-current="page"{% endif %}>{{ cat.name }}</a></li>
+          {%- endfor %}
+          <li><a href="/tools/"{% if page.url == "/tools/" %} aria-current="page"{% endif %}>All tools</a></li>
+        </ul>
+      </nav>
+
+      <div class="header-actions">
+        <button class="icon-btn theme-toggle" type="button" aria-label="Switch colour theme">
+          <span class="when-light">{{ icon("moon") }}</span><span class="when-dark">{{ icon("sun") }}</span>
+        </button>
+        <button class="icon-btn nav-toggle" type="button" aria-label="Menu" aria-expanded="false" aria-controls="main-nav">{{ icon("menu") }}</button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    {{ content | safe }}
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <a class="brand" href="/">{{ wren(30) }}<span>Wren<b>Convert</b></span></a>
+        <p>Free file converter that works inside your browser. Nothing is uploaded, so your files stay yours.</p>
+        <p class="footer-badge">{{ icon("lock", 16) }} 0 files uploaded. Ever.</p>
+      </div>
+      <div>
+        <h2>Image</h2>
+        <ul>
+          {%- for t in tools | inCategory("image") | where("popular", true) %}{% if loop.index <= 6 %}
+          <li><a href="/{{ t.slug }}/">{{ t | toolName }}</a></li>
+          {%- endif %}{% endfor %}
+        </ul>
+      </div>
+      <div>
+        <h2>Converters</h2>
+        <ul>
+          {%- for cat in categories %}{% if cat.phase <= 4 %}
+          <li><a href="/{{ cat.slug }}-converter/">{{ cat.title }}</a></li>
+          {%- endif %}{% endfor %}
+          <li><a href="/tools/">All tools</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2>WrenConvert</h2>
+        <ul>
+          <li><a href="/about/">About</a></li>
+          <li><a href="/privacy/">Privacy</a></li>
+          <li><a href="/terms/">Terms</a></li>
+          <li><a href="/contact/">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="container footer-bottom">
+      <p>© {{ "" | year }} {{ site.name }}</p>
+      <p>Made to run on your device, not ours.</p>
+    </div>
+  </footer>
+
+  <div class="toast" role="status" aria-live="polite" hidden></div>
+  <script src="/assets/js/catalog.js" defer></script>
+  <script src="/assets/js/main.js" defer></script>
+</body>
+</html>

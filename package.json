@@ -1,0 +1,27 @@
+{
+  "name": "wrenconvert",
+  "version": "0.1.0",
+  "description": "Free file converter that runs in your browser. Files never leave your device.",
+  "private": true,
+  "scripts": {
+    "vendor": "node scripts/build-vendor.mjs",
+    "dev": "node scripts/build-vendor.mjs && eleventy --serve --port 8080",
+    "build": "node scripts/build-vendor.mjs && eleventy"
+  },
+  "devDependencies": {
+    "@11ty/eleventy": "^3.1.8",
+    "@fontsource-variable/inter": "^5.3.0",
+    "esbuild": "0.28.2"
+  },
+  "dependencies": {
+    "@jsquash/avif": "2.1.1",
+    "@jsquash/webp": "1.5.0",
+    "ag-psd": "34.1.0",
+    "gifenc": "1.0.3",
+    "heic-to": "1.6.7",
+    "jszip": "3.10.2",
+    "pako": "2.1.0",
+    "pdf-lib": "1.17.1",
+    "utif": "3.1.0"
+  }
+}
