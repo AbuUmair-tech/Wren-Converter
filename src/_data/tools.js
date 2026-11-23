@@ -16,7 +16,7 @@ function targetsFor(from) {
 }
 
 // Categories whose converters run today
-const LIVE = ['image', 'spreadsheet'];
+const LIVE = ['image', 'spreadsheet', 'font'];
 
 const RAW = ['ARW', 'CR2', 'CR3', 'DNG', 'NEF', 'ORF', 'RW2'];
 const ALPHA = ['PNG', 'WEBP', 'AVIF', 'GIF', 'TIFF', 'TGA', 'ICO', 'SVG', 'PSD', 'HEIC', 'HEIF'];
@@ -24,6 +24,10 @@ const NO_ALPHA = ['JPG', 'JFIF', 'BMP', 'PDF'];
 
 function summary(from, to) {
   const F = label(from), T = label(to);
+  if (groupOf(from).slug === 'font') {
+    if (to === 'WOFF2' || to === 'WOFF') return `Turn ${F} fonts into ${T} web fonts for your website, smaller and ready for @font-face. Converted in your browser, never uploaded.`;
+    return `Convert ${F} fonts to ${T} you can install on your computer. Free, private, and your font files are never uploaded.`;
+  }
   if (groupOf(from).slug === 'spreadsheet') {
     if (to === 'PDF') return `Turn ${F} spreadsheets into a PDF table you can print or share. Converted in your browser; the file is never uploaded.`;
     if (to === 'HTML') return `Turn a ${F} spreadsheet into a web page table you can open in any browser or paste into a website.`;
@@ -60,6 +64,17 @@ function notes(t) {
   if (!t.from) return [];
   const { from, to } = t; const F = label(from), T = label(to);
   const n = [];
+  if (t.category === 'font') {
+    if (from === 'WOFF' || from === 'WOFF2') n.push(`${F} is a packed version of a TTF or OTF font. Unpacking gives back exactly the font that was packed, with nothing changed.`);
+    if (from === 'EOT') n.push(`EOT is the old Internet Explorer web font format. Plain EOT files work; EOT files squeezed with MicroType Express compression are not supported yet.`);
+    if (to === 'WOFF2') n.push(`WOFF2 is the smallest font format, often less than half the size of the TTF. Every current browser supports it, so it is the only web font file most websites need.`);
+    if (to === 'WOFF') n.push(`WOFF is only needed for browsers older than about 2016. For a modern website, WOFF2 alone is smaller and enough.`);
+    if (to === 'WOFF' || to === 'WOFF2') n.push(`Packing is lossless: the outlines, kerning, ligatures and language support stay exactly the same.`);
+    if (to === 'OTF') n.push(`OTF can hold either TrueType or PostScript (CFF) outlines. We keep your font's outlines exactly as they are, so nothing changes and the file works anywhere OTF is accepted.`);
+    if (to === 'TTF' && (from === 'OTF' || from === 'WOFF' || from === 'WOFF2' || from === 'EOT')) n.push(`If the font uses PostScript (CFF) outlines, they are redrawn as TrueType curves, a difference too small to see at normal sizes. Kerning, ligatures and language features are copied across unchanged. Variable OTF fonts (CFF2) are not supported yet.`);
+    n.push(`Fonts are licensed software. Check that your font's licence allows converting it and using it on the web.`);
+    return n;
+  }
   if (t.category === 'spreadsheet') {
     const BOOKS = ['XLSX', 'XLSM', 'XLS', 'ODS'];
     if (from === 'CSV' || from === 'TSV') n.push(`We detect whether your ${F} uses commas, semicolons or tabs. Plain numbers become real numbers, while values with leading zeros, like 00123 or phone numbers, stay exactly as written.`);

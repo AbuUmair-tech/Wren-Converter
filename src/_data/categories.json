@@ -49,11 +49,17 @@
     "phase": 3,
     "formats": 5,
     "icon": "type",
-    "blurb": "Turn desktop fonts into web fonts and back again.",
+    "blurb": "Turn desktop fonts into web fonts and back again: TTF, OTF, WOFF, WOFF2 and EOT. Lossless, with every language feature kept.",
     "examples": [
       "TTF",
       "OTF",
       "WOFF",
+      "WOFF2",
+      "EOT"
+    ],
+    "live": true,
+    "demo": [
+      "TTF",
       "WOFF2"
     ]
   },

@@ -158,5 +158,53 @@
     "to": "XLSX",
     "popular": true,
     "summary": "Open Apple Numbers spreadsheets in Excel or Google Sheets by converting them to XLSX, without needing a Mac."
+  },
+  {
+    "slug": "ttf-to-woff2",
+    "category": "font",
+    "from": "TTF",
+    "to": "WOFF2",
+    "popular": true,
+    "summary": "Turn a TTF font into a WOFF2 web font, usually less than half the size, ready for @font-face on your website."
+  },
+  {
+    "slug": "otf-to-ttf",
+    "category": "font",
+    "from": "OTF",
+    "to": "TTF",
+    "popular": true,
+    "summary": "Convert OTF fonts to TTF for apps that only accept TrueType. Kerning, ligatures and language support are kept."
+  },
+  {
+    "slug": "woff2-to-ttf",
+    "category": "font",
+    "from": "WOFF2",
+    "to": "TTF",
+    "popular": true,
+    "summary": "Unpack a WOFF2 web font back into a TTF you can install on Windows, Mac or Linux."
+  },
+  {
+    "slug": "woff-to-ttf",
+    "category": "font",
+    "from": "WOFF",
+    "to": "TTF",
+    "popular": true,
+    "summary": "Unpack a WOFF web font into a desktop TTF font, exactly as it was before it was packed."
+  },
+  {
+    "slug": "ttf-to-otf",
+    "category": "font",
+    "from": "TTF",
+    "to": "OTF",
+    "popular": true,
+    "summary": "Save a TrueType font as OTF without changing a single outline."
+  },
+  {
+    "slug": "eot-to-ttf",
+    "category": "font",
+    "from": "EOT",
+    "to": "TTF",
+    "popular": true,
+    "summary": "Rescue old Internet Explorer EOT web fonts by turning them back into TTF."
   }
 ]

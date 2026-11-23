@@ -204,13 +204,15 @@
   const THUMBABLE = /^image\/(png|jpe?g|gif|webp|avif|bmp|svg\+xml|x-icon|vnd\.microsoft\.icon)$/;
   const engines = {};
   const isSheet = (fmt) => groupOf(fmt)?.slug === 'spreadsheet';
-  // Spreadsheets and images have separate engines; each loads only when needed
+  const isFont = (fmt) => groupOf(fmt)?.slug === 'font';
+  // Each family of formats has its own engine; each loads only when needed
   const engineFor = (fmt) => {
-    const file = isSheet(fmt) ? 'sheet-engine' : 'engine';
+    const file = isSheet(fmt) ? 'sheet-engine' : isFont(fmt) ? 'font-engine' : 'engine';
     return (engines[file] ||= import(`/assets/js/${file}.js`));
   };
   const ACCEPT = {
     image: 'image/*,.heic,.heif,.jfif,.tif,.tiff,.psd,.tga,.ico,.svg,.arw,.cr2,.cr3,.dng,.nef,.orf,.rw2',
+    font: '.ttf,.otf,.woff,.woff2,.eot,font/ttf,font/otf,font/woff,font/woff2',
     spreadsheet: '.csv,.tsv,.txt,.xlsx,.xlsm,.xls,.ods,.numbers,text/csv,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
   };
   const converters = $$('[data-converter]');
@@ -262,6 +264,8 @@
           h += `<label class="check"><input type="checkbox" data-opt="bom"${o.bom ? ' checked' : ''}> Excel-friendly (keeps accents and non-English text)</label>`;
         }
         if (to === 'PDF') h += sel('page', 'Page size', [['A4', 'A4'], ['LETTER', 'US Letter']]);
+      } else if (mode === 'convert' && isFont(from)) {
+        // Fonts need no settings: packing is lossless
       } else if (mode === 'convert') {
         if (LOSSY.has(to)) h += qualityField;
         if (to === 'PDF') {
@@ -312,7 +316,7 @@
       $('[data-val]', toBtn).textContent = label(to);
       const ready = PAGES.has(slugFor(from, to));
       status.hidden = ready;
-      if (!ready) status.innerHTML = `<span class="badge">Coming soon</span> ${esc(label(from))} to ${esc(label(to))} is not ready yet. Images and spreadsheets work today; other file types are on the way.`;
+      if (!ready) status.innerHTML = `<span class="badge">Coming soon</span> ${esc(label(from))} to ${esc(label(to))} is not ready yet. Images, spreadsheets and fonts work today; other file types are on the way.`;
       btn.disabled = !ready || busy;
       renderOptions();
       resetDone();
@@ -383,7 +387,14 @@
         const li = document.createElement('li');
         li.className = `file-item is-${it.state}`;
         if (!it.thumb && THUMBABLE.test(it.file.type) && it.file.size < 40e6) it.thumb = URL.createObjectURL(it.file);
-        const thumb = it.thumb ? `<img class="file-thumb" src="${it.thumb}" alt="" onerror="this.replaceWith(Object.assign(document.createElement('span'),{className:'file-thumb',textContent:'${esc(extOf(it.file.name))}'}))">`
+        const fontExt = ['TTF', 'OTF', 'WOFF', 'WOFF2'].includes(extOf(it.file.name));
+        if (fontExt && !it.fontFam && it.file.size < 30e6) {
+          it.fontFam = `wren-preview-${Math.random().toString(36).slice(2)}`;
+          it.file.arrayBuffer().then((buf) => new FontFace(it.fontFam, buf).load())
+            .then((face) => { document.fonts.add(face); it.fontReady = true; $$(`[data-font="${it.fontFam}"]`).forEach((el) => el.classList.add('is-ready')); })
+            .catch(() => {});
+        }
+        const thumb = it.fontFam ? `<span class="file-thumb file-thumb-font${it.fontReady ? ' is-ready' : ''}" data-font="${it.fontFam}" style="font-family:'${it.fontFam}',serif">Aa</span>` : it.thumb ? `<img class="file-thumb" src="${it.thumb}" alt="" onerror="this.replaceWith(Object.assign(document.createElement('span'),{className:'file-thumb',textContent:'${esc(extOf(it.file.name))}'}))">`
           : `<span class="file-thumb">${esc(extOf(it.file.name))}</span>`;
         let meta = `${esc(extOf(it.file.name))} · ${fmtSize(it.file.size)}`;
         let right = '';
@@ -392,7 +403,7 @@
         if (it.state === 'done' && it.result) {
           const r = it.result;
           const pct = Math.max(-99, Math.round((r.blob.size / it.file.size - 1) * 100));
-          meta = `${esc(extOf(it.file.name))} ${fmtSize(it.file.size)} → <strong>${esc(extOf(r.name))} ${fmtSize(r.blob.size)}</strong>${pct ? ` <span class="delta ${pct < 0 ? 'down' : 'up'}">${pct > 0 ? '+' : ''}${pct}%</span>` : ''}${r.width ? ` · ${r.width}×${r.height}` : ''}${r.sheets > 1 ? ` · ${r.sheets} sheets` : ''}${r.unchanged ? ' · already as small as it gets' : ''}`;
+          meta = `${esc(extOf(it.file.name))} ${fmtSize(it.file.size)} → <strong>${esc(extOf(r.name))} ${fmtSize(r.blob.size)}</strong>${pct ? ` <span class="delta ${pct < 0 ? 'down' : 'up'}">${pct > 0 ? '+' : ''}${pct}%</span>` : ''}${r.width ? ` · ${r.width}×${r.height}` : ''}${r.sheets > 1 ? ` · ${r.sheets} sheets` : ''}${r.font ? ` · ${esc(r.font)}` : ''}${r.unchanged ? ' · already as small as it gets' : ''}`;
           right = resultRow(r);
         }
         if (it.state === 'done' && !it.result) right = '<span class="file-status">Added to PDF</span>';
@@ -476,6 +487,8 @@
               it.result = await E.resize(it.file, o.rmode === 'pct'
                 ? { percent: num(o.percent) || 100, format: o.format === 'same' ? undefined : o.format }
                 : { width: num(o.rw), height: num(o.rh), format: o.format === 'same' ? undefined : o.format });
+            } else if (isFont(from)) {
+              it.result = await E.convert(it.file, to);
             } else if (isSheet(from)) {
               it.result = await E.convert(it.file, to, { sheets: o.sheets, separator: o.separator, bom: o.bom, page: o.page === 'fit' ? 'A4' : o.page });
             } else {

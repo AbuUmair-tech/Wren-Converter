@@ -1,1 +1,1 @@
-export { deflate } from 'pako';
+export { deflate, inflate } from 'pako';

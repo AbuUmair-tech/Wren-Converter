@@ -614,3 +614,7 @@ tbody th { font-weight: 600; color: var(--muted); white-space: nowrap; }
 @media (max-width: 560px) { .footer-grid { grid-template-columns: 1fr 1fr; } }
 .fmt-csv { background: #2f7d55; } .fmt-tsv { background: #3f7d6a; } .fmt-xlsx { background: #1f7244; } .fmt-xlsm { background: #2a6b4a; }
 .fmt-xls { background: #4f7a3a; } .fmt-ods { background: #3f6fa0; } .fmt-numbers { background: #3a9a5b; } .fmt-html { background: #c2572f; }
+
+.file-thumb-font { font-size: 1.25rem; font-weight: 400; color: var(--ink); opacity: .35; transition: opacity .3s; }
+.file-thumb-font.is-ready { opacity: 1; }
+.fmt-ttf { background: #4a4a8a; } .fmt-otf { background: #5b4a8a; } .fmt-woff { background: #3d5a9a; } .fmt-woff2 { background: #2f6b9a; } .fmt-eot { background: #6b6b7a; }

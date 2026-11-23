@@ -48,6 +48,13 @@
     "best": "Archiving RAW photos; some phones shoot it",
     "support": "RAW editors"
   },
+  "EOT": {
+    "full": "Embedded OpenType",
+    "by": "Microsoft, 1997",
+    "type": "Packed font for Internet Explorer",
+    "best": "Nothing today; Internet Explorer is retired",
+    "support": "Internet Explorer only"
+  },
   "GIF": {
     "full": "Graphics Interchange Format",
     "by": "CompuServe, 1987",
@@ -125,6 +132,13 @@
     "best": "Editing photos from Olympus cameras",
     "support": "RAW editors"
   },
+  "OTF": {
+    "full": "OpenType Font",
+    "by": "Microsoft and Adobe, 1996",
+    "type": "TrueType or PostScript (CFF) outlines",
+    "best": "Design work and installing on computers",
+    "support": "Windows, Mac, Linux and design apps"
+  },
   "PDF": {
     "full": "Portable Document Format",
     "by": "Adobe, 1993",
@@ -181,12 +195,33 @@
     "best": "Data with commas inside the values",
     "support": "Spreadsheets, databases and code"
   },
+  "TTF": {
+    "full": "TrueType Font",
+    "by": "Apple, 1991",
+    "type": "Quadratic outlines, often with hinting",
+    "best": "Installing on computers and in apps",
+    "support": "Windows, Mac, Linux, Android, iOS"
+  },
   "WEBP": {
     "full": "WebP",
     "by": "Google, 2010",
     "type": "Lossy or lossless, transparency",
     "best": "Web pages that need small images",
     "support": "All modern browsers, some older apps lack it"
+  },
+  "WOFF": {
+    "full": "Web Open Font Format",
+    "by": "W3C, 2010",
+    "type": "Compressed TTF or OTF (zlib)",
+    "best": "Websites that must support very old browsers",
+    "support": "Every browser since 2012"
+  },
+  "WOFF2": {
+    "full": "Web Open Font Format 2",
+    "by": "W3C and Google, 2014",
+    "type": "Compressed TTF or OTF (Brotli)",
+    "best": "Fonts on websites today",
+    "support": "Every current browser"
   },
   "XLS": {
     "full": "Excel 97\u20132003 Workbook",
