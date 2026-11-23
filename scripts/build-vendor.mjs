@@ -34,5 +34,13 @@ await build({
 copyFileSync(join(root, 'node_modules/@jsquash/avif/codec/enc/avif_enc.wasm'), join(out, 'avif_enc.wasm'));
 copyFileSync(join(root, 'node_modules/@jsquash/webp/codec/enc/webp_enc.wasm'), join(out, 'webp_enc.wasm'));
 copyFileSync(join(root, 'node_modules/fonteditor-core/woff2/woff2.wasm'), join(out, 'woff2.wasm'));
+// ffmpeg.wasm ships as browser-ready ES modules plus a worker; copy them as they are
+mkdirSync(join(out, 'ffmpeg/core'), { recursive: true });
+for (const f of ['classes.js', 'const.js', 'errors.js', 'index.js', 'types.js', 'utils.js', 'worker.js']) {
+  copyFileSync(join(root, 'node_modules/@ffmpeg/ffmpeg/dist/esm', f), join(out, 'ffmpeg', f));
+}
+for (const f of ['ffmpeg-core.js', 'ffmpeg-core.wasm']) {
+  copyFileSync(join(root, 'node_modules/@ffmpeg/core/dist/esm', f), join(out, 'ffmpeg/core', f));
+}
 import('node:fs').then((fs) => fs.writeFileSync(stamp, new Date().toISOString()));
 console.log('vendor: built', entries.length, 'modules');

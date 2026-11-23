@@ -24,7 +24,7 @@ description: Every file converter on WrenConvert. All of them run in your browse
     {%- set catTools = tools | inCategory(cat.slug) %}
     <div class="tool-group" data-group>
       <h2><span class="cat-icon cat-{{ cat.slug }}">{{ icon(cat.icon, 18) }}</span> {{ cat.title }}
-        {%- if not catTools.length %} <em class="badge {% if cat.phase <= 4 %}{% else %}badge-muted{% endif %}">{% if cat.phase <= 4 %}Next{% else %}Later{% endif %}</em>{% endif %}</h2>
+</h2>
       {%- if catTools.length %}
       <ul class="chip-list">
         {%- for t in catTools %}{% if not t.from %}<li data-item="{{ t.slug }} {{ t.name }}"><a href="/{{ t.slug }}/">{{ t | toolName }}</a></li>{% endif %}{% endfor %}

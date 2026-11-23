@@ -1,0 +1,24 @@
+---
+layout: layouts/base.njk
+permalink: /faq/
+title: Frequently asked questions
+description: "Answers to common questions about WrenConvert: price, privacy, file size limits, quality, offline use and supported formats."
+schemaType: faq
+---
+<section class="page-hero">
+  <div class="container narrow">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a><span>/</span><span aria-current="page">FAQ</span></nav>
+    <h1>Frequently asked questions</h1>
+    <p class="lede">Short answers to the things people ask most. Can't find yours? <a href="/contact/">Email me</a>.</p>
+  </div>
+</section>
+<section class="section">
+  <div class="container narrow faq-list">
+    {%- for item in faq %}
+    <details{% if loop.first %} open{% endif %}>
+      <summary>{{ item.q }}</summary>
+      <p>{{ item.a }}</p>
+    </details>
+    {%- endfor %}
+  </div>
+</section>

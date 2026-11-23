@@ -618,3 +618,16 @@ tbody th { font-weight: 600; color: var(--muted); white-space: nowrap; }
 .file-thumb-font { font-size: 1.25rem; font-weight: 400; color: var(--ink); opacity: .35; transition: opacity .3s; }
 .file-thumb-font.is-ready { opacity: 1; }
 .fmt-ttf { background: #4a4a8a; } .fmt-otf { background: #5b4a8a; } .fmt-woff { background: #3d5a9a; } .fmt-woff2 { background: #2f6b9a; } .fmt-eot { background: #6b6b7a; }
+
+/* ---------- Pages: contact, policies, bylines ---------- */
+.contact-email { font-size: 1.35rem; font-weight: 700; margin: 0 0 8px; }
+.contact-email a { text-decoration: none; border-bottom: 2px solid var(--accent-soft); }
+.contact-email a:hover { border-color: var(--accent); }
+.updated { color: var(--muted) !important; font-size: .9rem; }
+.byline { margin: 10px 0 0; color: var(--muted); font-size: .9rem; }
+.byline a { color: var(--ink-2); }
+.prose table { margin: 8px 0 24px; }
+.prose .table-wrap, .prose > table { display: block; overflow-x: auto; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); }
+.faq-list details[open] summary { color: var(--accent-ink); }
+.site-footer .footer-bottom a { color: inherit; }
+.page-hero + .prose-wrap { padding-top: 8px; border-top: 0; }

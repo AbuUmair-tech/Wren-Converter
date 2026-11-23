@@ -70,13 +70,19 @@
     "phase": 4,
     "formats": 21,
     "icon": "music",
-    "blurb": "MP3, WAV, M4A, FLAC, OGG. Pull the audio out of a video too.",
+    "blurb": "MP3, WAV, M4A, FLAC, OGG, Opus and more. Pull the sound out of a video too.",
     "examples": [
       "MP3",
       "WAV",
       "M4A",
       "FLAC",
-      "OGG"
+      "OGG",
+      "MP4"
+    ],
+    "live": true,
+    "demo": [
+      "WAV",
+      "MP3"
     ]
   },
   {
@@ -92,7 +98,8 @@
       "MOV",
       "WebM",
       "MKV"
-    ]
+    ],
+    "hidden": true
   },
   {
     "slug": "archive",
@@ -107,7 +114,8 @@
       "7Z",
       "TAR",
       "RAR"
-    ]
+    ],
+    "hidden": true
   },
   {
     "slug": "pdf",
@@ -121,7 +129,8 @@
       "PDF",
       "JPG",
       "PNG"
-    ]
+    ],
+    "hidden": true
   },
   {
     "slug": "vector",
@@ -135,7 +144,8 @@
       "SVG",
       "EPS",
       "EMF"
-    ]
+    ],
+    "hidden": true
   },
   {
     "slug": "document",
@@ -150,7 +160,8 @@
       "ODT",
       "RTF",
       "TXT"
-    ]
+    ],
+    "hidden": true
   },
   {
     "slug": "ebook",
@@ -164,7 +175,8 @@
       "EPUB",
       "MOBI",
       "AZW3"
-    ]
+    ],
+    "hidden": true
   },
   {
     "slug": "presentation",
@@ -178,6 +190,7 @@
       "PPTX",
       "KEY",
       "ODP"
-    ]
+    ],
+    "hidden": true
   }
 ]

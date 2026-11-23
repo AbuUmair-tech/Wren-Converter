@@ -1,4 +1,25 @@
 {
+  "AAC": {
+    "full": "Advanced Audio Coding",
+    "by": "MPEG, 1997",
+    "type": "Lossy",
+    "best": "Streaming and older players",
+    "support": "Most players"
+  },
+  "AIFF": {
+    "full": "Audio Interchange File Format",
+    "by": "Apple, 1988",
+    "type": "Uncompressed, large files",
+    "best": "Music production on Mac",
+    "support": "Mac and audio software"
+  },
+  "AMR": {
+    "full": "Adaptive Multi-Rate",
+    "by": "3GPP, 1999",
+    "type": "Lossy, speech only",
+    "best": "Old phone voice recordings",
+    "support": "Few players"
+  },
   "ARW": {
     "full": "Sony Alpha RAW",
     "by": "Sony",
@@ -55,6 +76,13 @@
     "best": "Nothing today; Internet Explorer is retired",
     "support": "Internet Explorer only"
   },
+  "FLAC": {
+    "full": "Free Lossless Audio Codec",
+    "by": "Xiph.Org, 2001",
+    "type": "Lossless, about half the size of WAV",
+    "best": "Keeping music in full quality",
+    "support": "Most players; not older iPhones"
+  },
   "GIF": {
     "full": "Graphics Interchange Format",
     "by": "CompuServe, 1987",
@@ -104,6 +132,41 @@
     "best": "Photos you want to share anywhere",
     "support": "Everywhere"
   },
+  "M4A": {
+    "full": "MPEG-4 Audio (usually AAC)",
+    "by": "Apple / MPEG",
+    "type": "Lossy, smaller than MP3 at the same quality",
+    "best": "iPhone, iTunes and Apple Music",
+    "support": "Nearly everything"
+  },
+  "MKV": {
+    "full": "Matroska video",
+    "by": "Matroska, 2002",
+    "type": "Video with sound, many tracks",
+    "best": "Films with several audio or subtitle tracks",
+    "support": "VLC and most players"
+  },
+  "MOV": {
+    "full": "QuickTime Movie",
+    "by": "Apple, 1991",
+    "type": "Video with sound",
+    "best": "iPhone and Mac videos",
+    "support": "Most players"
+  },
+  "MP3": {
+    "full": "MPEG-1 Audio Layer III",
+    "by": "Fraunhofer and MPEG, 1993",
+    "type": "Lossy",
+    "best": "Music and podcasts on any device",
+    "support": "Everything"
+  },
+  "MP4": {
+    "full": "MPEG-4 Part 14 video",
+    "by": "MPEG, 2001",
+    "type": "Video with sound",
+    "best": "Videos on phones and the web",
+    "support": "Everything"
+  },
   "NEF": {
     "full": "Nikon Electronic Format",
     "by": "Nikon",
@@ -124,6 +187,20 @@
     "type": "Open standard, sheets and formulas",
     "best": "LibreOffice and OpenOffice",
     "support": "LibreOffice, Excel, Google Sheets"
+  },
+  "OGG": {
+    "full": "Ogg Vorbis",
+    "by": "Xiph.Org, 2000",
+    "type": "Lossy",
+    "best": "Games and open-source apps",
+    "support": "Android, browsers, most players"
+  },
+  "OPUS": {
+    "full": "Opus Interactive Audio",
+    "by": "IETF, 2012",
+    "type": "Lossy, best quality at small sizes",
+    "best": "Voice and music over the internet",
+    "support": "Browsers, Android, WhatsApp"
   },
   "ORF": {
     "full": "Olympus RAW Format",
@@ -202,12 +279,33 @@
     "best": "Installing on computers and in apps",
     "support": "Windows, Mac, Linux, Android, iOS"
   },
+  "WAV": {
+    "full": "Waveform Audio File",
+    "by": "Microsoft and IBM, 1991",
+    "type": "Uncompressed, large files",
+    "best": "Editing and recording",
+    "support": "Everything"
+  },
+  "WEBM": {
+    "full": "WebM video",
+    "by": "Google, 2010",
+    "type": "Video with sound",
+    "best": "Videos on the web",
+    "support": "Browsers and most players"
+  },
   "WEBP": {
     "full": "WebP",
     "by": "Google, 2010",
     "type": "Lossy or lossless, transparency",
     "best": "Web pages that need small images",
     "support": "All modern browsers, some older apps lack it"
+  },
+  "WMA": {
+    "full": "Windows Media Audio",
+    "by": "Microsoft, 1999",
+    "type": "Lossy",
+    "best": "Old Windows music libraries",
+    "support": "Windows; few others"
   },
   "WOFF": {
     "full": "Web Open Font Format",

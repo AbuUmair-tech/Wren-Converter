@@ -1,0 +1,29 @@
+---
+permalink: /llms.txt
+eleventyExcludeFromCollections: true
+---
+# {{ site.name }}
+
+> {{ site.description }}
+
+{{ site.name }} is a free website of file converters that run entirely in the visitor's web browser using JavaScript and WebAssembly. Files are never uploaded to a server: they are read, converted and saved on the visitor's own device, which also means the converters keep working offline after first use. No account is needed and there is no paid plan. It is built and maintained by {{ site.author }} ({{ site.email }}).
+
+## Converters
+
+{%- for cat in categories %}
+- [{{ cat.title }}]({{ site.url }}/{{ cat.slug }}-converter/): {{ cat.blurb }}
+{%- endfor %}
+
+## Popular conversions
+
+{%- for t in tools %}{% if t.popular %}
+- [{{ t | toolName }}]({{ site.url }}/{{ t.slug }}/): {{ t.summary }}
+{%- endif %}{% endfor %}
+
+## How it works and policies
+
+- [How it works]({{ site.url }}/how-it-works/): what happens to a file, how to verify nothing is uploaded, how the converters were tested, and limits
+- [FAQ]({{ site.url }}/faq/)
+- [Privacy policy]({{ site.url }}/privacy/): no uploads, no cookies, no analytics or ads
+- [About]({{ site.url }}/about/): who runs the site and the open-source libraries it uses
+- [All tools]({{ site.url }}/tools/)

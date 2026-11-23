@@ -1,26 +1,215 @@
 {
   "groups": [
-    { "slug": "image", "name": "Image",
-      "formats": ["AVIF", "BMP", "GIF", "HEIC", "HEIF", "ICO", "JFIF", "JPG", "PNG", "PSD", "SVG", "TGA", "TIFF", "WEBP", "ARW", "CR2", "CR3", "DNG", "NEF", "ORF", "RW2"] },
-    { "slug": "spreadsheet", "name": "Spreadsheet", "formats": ["CSV", "NUMBERS", "ODS", "TSV", "XLS", "XLSM", "XLSX"] },
-    { "slug": "font", "name": "Font", "formats": ["EOT", "OTF", "TTF", "WOFF", "WOFF2"] },
-    { "slug": "audio", "name": "Audio", "formats": ["AAC", "AIFF", "AMR", "FLAC", "M4A", "MP3", "OGG", "OPUS", "WAV", "WMA"] },
-    { "slug": "video", "name": "Video", "formats": ["3GP", "AVI", "FLV", "M4V", "MKV", "MOV", "MP4", "MPEG", "WEBM", "WMV"] },
-    { "slug": "document", "name": "Document", "formats": ["DOC", "DOCX", "HTML", "MD", "ODT", "PAGES", "PDF", "RTF", "TXT"] },
-    { "slug": "presentation", "name": "Presentation", "formats": ["KEY", "ODP", "PPT", "PPTX"] },
-    { "slug": "ebook", "name": "E-book", "formats": ["AZW3", "EPUB", "FB2", "MOBI"] },
-    { "slug": "vector", "name": "Vector", "formats": ["AI", "EMF", "EPS", "WMF"] },
-    { "slug": "archive", "name": "Archive", "formats": ["7Z", "GZ", "RAR", "TAR", "TAR.BZ2", "TAR.GZ", "ZIP"] }
+    {
+      "slug": "image",
+      "name": "Image",
+      "formats": [
+        "AVIF",
+        "BMP",
+        "GIF",
+        "HEIC",
+        "HEIF",
+        "ICO",
+        "JFIF",
+        "JPG",
+        "PNG",
+        "PSD",
+        "SVG",
+        "TGA",
+        "TIFF",
+        "WEBP",
+        "ARW",
+        "CR2",
+        "CR3",
+        "DNG",
+        "NEF",
+        "ORF",
+        "RW2"
+      ]
+    },
+    {
+      "slug": "spreadsheet",
+      "name": "Spreadsheet",
+      "formats": [
+        "CSV",
+        "NUMBERS",
+        "ODS",
+        "TSV",
+        "XLS",
+        "XLSM",
+        "XLSX"
+      ]
+    },
+    {
+      "slug": "font",
+      "name": "Font",
+      "formats": [
+        "EOT",
+        "OTF",
+        "TTF",
+        "WOFF",
+        "WOFF2"
+      ]
+    },
+    {
+      "slug": "audio",
+      "name": "Audio",
+      "formats": [
+        "AAC",
+        "AIFF",
+        "AMR",
+        "FLAC",
+        "M4A",
+        "MP3",
+        "OGG",
+        "OPUS",
+        "WAV",
+        "WMA",
+        "MP4",
+        "MOV",
+        "WEBM",
+        "MKV"
+      ]
+    },
+    {
+      "slug": "video",
+      "name": "Video",
+      "formats": [
+        "3GP",
+        "AVI",
+        "FLV",
+        "M4V",
+        "MKV",
+        "MOV",
+        "MP4",
+        "MPEG",
+        "WEBM",
+        "WMV"
+      ]
+    },
+    {
+      "slug": "document",
+      "name": "Document",
+      "formats": [
+        "DOC",
+        "DOCX",
+        "HTML",
+        "MD",
+        "ODT",
+        "PAGES",
+        "PDF",
+        "RTF",
+        "TXT"
+      ]
+    },
+    {
+      "slug": "presentation",
+      "name": "Presentation",
+      "formats": [
+        "KEY",
+        "ODP",
+        "PPT",
+        "PPTX"
+      ]
+    },
+    {
+      "slug": "ebook",
+      "name": "E-book",
+      "formats": [
+        "AZW3",
+        "EPUB",
+        "FB2",
+        "MOBI"
+      ]
+    },
+    {
+      "slug": "vector",
+      "name": "Vector",
+      "formats": [
+        "AI",
+        "EMF",
+        "EPS",
+        "WMF"
+      ]
+    },
+    {
+      "slug": "archive",
+      "name": "Archive",
+      "formats": [
+        "7Z",
+        "GZ",
+        "RAR",
+        "TAR",
+        "TAR.BZ2",
+        "TAR.GZ",
+        "ZIP"
+      ]
+    }
   ],
-  "inputOnly": ["HEIC", "HEIF", "PSD", "ARW", "CR2", "CR3", "DNG", "NEF", "ORF", "RW2", "NUMBERS", "PAGES", "KEY", "AMR", "WMA", "RAR", "AI", "EMF", "WMF", "EOT"],
+  "inputOnly": [
+    "HEIC",
+    "HEIF",
+    "PSD",
+    "ARW",
+    "CR2",
+    "CR3",
+    "DNG",
+    "NEF",
+    "ORF",
+    "RW2",
+    "NUMBERS",
+    "PAGES",
+    "KEY",
+    "AMR",
+    "WMA",
+    "RAR",
+    "AI",
+    "EMF",
+    "WMF",
+    "EOT",
+    "MP4",
+    "MOV",
+    "WEBM",
+    "MKV"
+  ],
   "extraTargets": {
-    "image": ["PDF"],
-    "spreadsheet": ["PDF", "HTML"],
-    "video": ["MP3", "WAV", "M4A", "GIF"],
-    "document": ["JPG", "PNG"],
-    "presentation": ["PDF", "JPG", "PNG"],
-    "ebook": ["PDF"],
-    "vector": ["SVG", "PNG", "JPG", "PDF"]
+    "image": [
+      "PDF"
+    ],
+    "spreadsheet": [
+      "PDF",
+      "HTML"
+    ],
+    "video": [
+      "MP3",
+      "WAV",
+      "M4A",
+      "GIF"
+    ],
+    "document": [
+      "JPG",
+      "PNG"
+    ],
+    "presentation": [
+      "PDF",
+      "JPG",
+      "PNG"
+    ],
+    "ebook": [
+      "PDF"
+    ],
+    "vector": [
+      "SVG",
+      "PNG",
+      "JPG",
+      "PDF"
+    ]
   },
-  "pdfTargets": ["JPG", "PNG", "DOCX", "TXT", "HTML"]
+  "pdfTargets": [
+    "JPG",
+    "PNG",
+    "DOCX",
+    "TXT",
+    "HTML"
+  ]
 }

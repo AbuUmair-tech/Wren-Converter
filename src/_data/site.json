@@ -2,5 +2,10 @@
   "name": "WrenConvert",
   "url": "https://wrenconvert.com",
   "tagline": "Convert files without uploading them",
-  "description": "Free file converter that runs entirely in your browser. Convert images, spreadsheets, fonts and audio. Your files never leave your device."
+  "description": "Free file converter that runs entirely in your browser. Convert images, spreadsheets, fonts and audio. Your files never leave your device.",
+  "email": "abuumair2025@gmail.com",
+  "author": "Abu Umair",
+  "updated": "2026-11-23",
+  "updatedHuman": "23 November 2026",
+  "launched": "2026"
 }

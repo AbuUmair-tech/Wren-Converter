@@ -1,0 +1,81 @@
+{#- Search, sharing and structured data for every page. Included in <head>. -#}
+{%- set pageTitle = (title + " | " + site.name) if title else (site.name + ": " + site.tagline) -%}
+{%- set pageDesc = description or site.description -%}
+{%- set pageUrl = site.url + page.url -%}
+{%- set isNoindex = noindex or (tool and tool.index === false) -%}
+{%- if isNoindex %}
+  <meta name="robots" content="noindex, follow">
+{%- else %}
+  <meta name="robots" content="index, follow, max-image-preview:large">
+{%- endif %}
+  <meta name="author" content="{{ site.author }}">
+  <meta property="og:type" content="{{ 'article' if (tool or schemaType == 'article') else 'website' }}">
+  <meta property="og:site_name" content="{{ site.name }}">
+  <meta property="og:title" content="{{ title or (site.name + ': ' + site.tagline) }}">
+  <meta property="og:description" content="{{ pageDesc }}">
+  <meta property="og:url" content="{{ pageUrl }}">
+  <meta property="og:image" content="{{ site.url }}/assets/img/og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="WrenConvert: convert files without uploading them">
+  <meta property="og:locale" content="en_US">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="{{ title or (site.name + ': ' + site.tagline) }}">
+  <meta name="twitter:description" content="{{ pageDesc }}">
+  <meta name="twitter:image" content="{{ site.url }}/assets/img/og.png">
+  <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
+  <link rel="manifest" href="/manifest.webmanifest">
+{#- JSON-LD graph -#}
+{%- set orgId = site.url + "/#organization" -%}
+{%- set personId = site.url + "/about/#author" -%}
+{%- set graph = [
+  {
+    "@type": "Organization", "@id": orgId, "name": site.name, "url": site.url + "/",
+    "logo": { "@type": "ImageObject", "url": site.url + "/assets/img/icon-512.png", "width": 512, "height": 512 },
+    "email": site.email, "founder": { "@id": personId },
+    "contactPoint": { "@type": "ContactPoint", "email": site.email, "contactType": "customer support", "availableLanguage": "English" }
+  },
+  { "@type": "Person", "@id": personId, "name": site.author, "url": site.url + "/about/", "email": site.email },
+  {
+    "@type": "WebSite", "@id": site.url + "/#website", "name": site.name, "url": site.url + "/",
+    "description": site.description, "inLanguage": "en", "publisher": { "@id": orgId }
+  }
+] -%}
+{%- set crumbs = [{ "@type": "ListItem", "position": 1, "name": "Home", "item": site.url + "/" }] -%}
+{%- if tool -%}
+  {%- set cat = categories | bySlug(tool.category) -%}
+  {%- set toolTitle = ((tool.from | fmt) + " to " + (tool.to | fmt) + " Converter") if tool.from else tool.name -%}
+  {%- set crumbs = (crumbs.push({ "@type": "ListItem", "position": 2, "name": cat.title, "item": site.url + "/" + cat.slug + "-converter/" }), crumbs) -%}
+  {%- set crumbs = (crumbs.push({ "@type": "ListItem", "position": 3, "name": toolTitle, "item": pageUrl }), crumbs) -%}
+  {%- set graph = (graph.push({
+    "@type": "WebApplication", "@id": pageUrl + "#app", "name": toolTitle, "url": pageUrl,
+    "description": tool.summary, "applicationCategory": "MultimediaApplication",
+    "operatingSystem": "Any (runs in a web browser)",
+    "browserRequirements": "Requires a modern browser with JavaScript and WebAssembly",
+    "isAccessibleForFree": true, "inLanguage": "en",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+    "author": { "@id": personId }, "publisher": { "@id": orgId },
+    "dateModified": site.updated
+  }), graph) -%}
+  {%- set qa = [] -%}
+  {%- for item in tool.faqs %}{% set qa = (qa.push({ "@type": "Question", "name": item.q, "acceptedAnswer": { "@type": "Answer", "text": item.a } }), qa) %}{% endfor -%}
+  {%- set graph = (graph.push({ "@type": "FAQPage", "@id": pageUrl + "#faq", "mainEntity": qa }), graph) -%}
+{%- elif cat and cat.slug -%}
+  {%- set crumbs = (crumbs.push({ "@type": "ListItem", "position": 2, "name": cat.title, "item": pageUrl }), crumbs) -%}
+  {%- set graph = (graph.push({ "@type": "CollectionPage", "@id": pageUrl, "name": cat.title, "url": pageUrl, "description": pageDesc, "isPartOf": { "@id": site.url + "/#website" } }), graph) -%}
+{%- elif schemaType == "faq" -%}
+  {%- set crumbs = (crumbs.push({ "@type": "ListItem", "position": 2, "name": "FAQ", "item": pageUrl }), crumbs) -%}
+  {%- set qa = [] -%}
+  {%- for item in faq %}{% set qa = (qa.push({ "@type": "Question", "name": item.q, "acceptedAnswer": { "@type": "Answer", "text": item.a } }), qa) %}{% endfor -%}
+  {%- set graph = (graph.push({ "@type": "FAQPage", "@id": pageUrl + "#faq", "mainEntity": qa }), graph) -%}
+{%- elif page.url != "/" and title -%}
+  {%- set crumbs = (crumbs.push({ "@type": "ListItem", "position": 2, "name": title, "item": pageUrl }), crumbs) -%}
+  {%- if schemaType == "article" -%}
+  {%- set graph = (graph.push({ "@type": "Article", "@id": pageUrl + "#article", "headline": title, "description": pageDesc, "url": pageUrl,
+    "author": { "@id": personId }, "publisher": { "@id": orgId }, "dateModified": site.updated, "inLanguage": "en" }), graph) -%}
+  {%- endif -%}
+{%- endif -%}
+{%- if page.url != "/" -%}
+  {%- set graph = (graph.push({ "@type": "BreadcrumbList", "itemListElement": crumbs }), graph) -%}
+{%- endif %}
+  <script type="application/ld+json">{{ { "@context": "https://schema.org", "@graph": graph } | dump | safe }}</script>

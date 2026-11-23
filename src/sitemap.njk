@@ -1,0 +1,16 @@
+---
+permalink: /sitemap.xml
+eleventyExcludeFromCollections: true
+---
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+{%- for path in ["/", "/tools/", "/how-it-works/", "/faq/", "/about/", "/contact/", "/privacy/", "/terms/"] %}
+  <url><loc>{{ site.url }}{{ path }}</loc><lastmod>{{ site.updated }}</lastmod></url>
+{%- endfor %}
+{%- for cat in categories %}
+  <url><loc>{{ site.url }}/{{ cat.slug }}-converter/</loc><lastmod>{{ site.updated }}</lastmod></url>
+{%- endfor %}
+{%- for t in tools %}{% if t.index %}
+  <url><loc>{{ site.url }}/{{ t.slug }}/</loc><lastmod>{{ site.updated }}</lastmod></url>
+{%- endif %}{% endfor %}
+</urlset>

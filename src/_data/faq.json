@@ -1,0 +1,42 @@
+[
+  {
+    "q": "Is WrenConvert really free?",
+    "a": "Yes. Your own device does the converting, so there are no server costs per file and no reason to charge for each file or limit how many you convert. There is no paid plan."
+  },
+  {
+    "q": "Are my files uploaded anywhere?",
+    "a": "No. Files are opened and converted inside your browser and saved straight back to your device. You can check by switching off your internet after the page loads: conversion still works."
+  },
+  {
+    "q": "Do I need to create an account or install anything?",
+    "a": "No. Open a converter page, add your files and press Convert. There is nothing to install and no sign-up."
+  },
+  {
+    "q": "Is there a file size limit?",
+    "a": "Only your device's memory. Photos, spreadsheets and fonts of any normal size are fine. Audio and video files up to about 1.5 GB work on most computers; phones handle less."
+  },
+  {
+    "q": "Can I convert many files at once?",
+    "a": "Yes. Add up to 100 files at a time, then download them one by one or all together as a ZIP file."
+  },
+  {
+    "q": "Does it work on iPhone and Android?",
+    "a": "Yes. The site works in current mobile browsers. Large files take longer on phones because the phone does the work."
+  },
+  {
+    "q": "Does it work offline?",
+    "a": "Yes, once a converter has been used. The site's code is kept by your browser, so pages and converters you have opened before keep working without an internet connection."
+  },
+  {
+    "q": "Will converting lower the quality?",
+    "a": "Saving to a compressed format such as JPG, WebP, MP3 or M4A always drops a little detail; the quality setting lets you choose how much. Lossless formats such as PNG, FLAC, WAV, WOFF2 and XLSX keep everything. Each converter page explains exactly what is kept."
+  },
+  {
+    "q": "Which file types can I convert?",
+    "a": "Images (JPG, PNG, WebP, AVIF, HEIC, GIF, TIFF, SVG, PSD, camera RAW and more), spreadsheets (Excel, CSV, OpenDocument, Apple Numbers), fonts (TTF, OTF, WOFF, WOFF2, EOT) and audio (MP3, WAV, M4A, AAC, FLAC, OGG, Opus, AIFF, and sound from MP4, MOV, WebM and MKV videos)."
+  },
+  {
+    "q": "A file will not convert. What can I do?",
+    "a": "Check the error message shown next to the file; it usually says what went wrong, such as a damaged file or a password-protected workbook. If it still fails, email the details to the address on the contact page."
+  }
+]

@@ -206,5 +206,53 @@
     "to": "TTF",
     "popular": true,
     "summary": "Rescue old Internet Explorer EOT web fonts by turning them back into TTF."
+  },
+  {
+    "slug": "mp4-to-mp3",
+    "category": "audio",
+    "from": "MP4",
+    "to": "MP3",
+    "popular": true,
+    "summary": "Pull the sound out of an MP4 video and save it as an MP3. The video never leaves your device."
+  },
+  {
+    "slug": "wav-to-mp3",
+    "category": "audio",
+    "from": "WAV",
+    "to": "MP3",
+    "popular": true,
+    "summary": "Shrink big WAV recordings into MP3 files about a tenth of the size, ready for any phone or player."
+  },
+  {
+    "slug": "m4a-to-mp3",
+    "category": "audio",
+    "from": "M4A",
+    "to": "MP3",
+    "popular": true,
+    "summary": "Convert iPhone voice memos and iTunes M4A files to MP3 so they play everywhere."
+  },
+  {
+    "slug": "flac-to-mp3",
+    "category": "audio",
+    "from": "FLAC",
+    "to": "MP3",
+    "popular": true,
+    "summary": "Turn lossless FLAC music into MP3s for your phone or car, with tags and album art kept."
+  },
+  {
+    "slug": "mp3-to-wav",
+    "category": "audio",
+    "from": "MP3",
+    "to": "WAV",
+    "popular": true,
+    "summary": "Convert MP3 to WAV for editing software, CD burning or apps that only accept WAV."
+  },
+  {
+    "slug": "ogg-to-mp3",
+    "category": "audio",
+    "from": "OGG",
+    "to": "MP3",
+    "popular": true,
+    "summary": "Convert OGG audio, such as WhatsApp voice notes and game sounds, to MP3."
   }
 ]

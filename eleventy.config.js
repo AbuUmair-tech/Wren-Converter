@@ -1,5 +1,7 @@
 module.exports = function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy({ 'src/assets': 'assets' });
+  // GitHub Pages: custom domain file, no Jekyll, and a classic favicon at the root
+  eleventyConfig.addPassthroughCopy({ 'src/CNAME': 'CNAME', 'src/.nojekyll': '.nojekyll', 'src/assets/img/favicon.ico': 'favicon.ico' });
   eleventyConfig.addPassthroughCopy({
     'node_modules/@fontsource-variable/inter/files/inter-latin-wght-normal.woff2':
       'assets/fonts/inter-latin-wght-normal.woff2',

@@ -4,5 +4,9 @@ eleventyExcludeFromCollections: true
 ---
 {%- set pages = [] -%}
 {%- for t in tools %}{% if t.from %}{% set pages = (pages.push(t.slug), pages) %}{% endif %}{% endfor -%}
-window.WREN_CATALOG = {{ catalog | dump | safe }};
+{%- set visible = [] -%}
+{%- for c in categories %}{% set visible = (visible.push(c.slug), visible) %}{% endfor -%}
+{%- set groups = [] -%}
+{%- for g in catalog.groups %}{% if g.slug in visible %}{% set groups = (groups.push(g), groups) %}{% endif %}{% endfor -%}
+window.WREN_CATALOG = {{ { groups: groups, inputOnly: catalog.inputOnly, extraTargets: catalog.extraTargets, pdfTargets: catalog.pdfTargets } | dump | safe }};
 window.WREN_PAGES = {{ pages | dump | safe }};

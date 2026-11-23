@@ -56,9 +56,15 @@
     return (PREFERRED[groupOf(from)?.slug] || []).find((f) => t.includes(f)) || t[0];
   };
   // Group a flat list of formats by catalog group, in catalog order
-  const grouped = (list) => CAT.groups
-    .map((g) => ({ slug: g.slug, name: g.name, formats: g.formats.filter((f) => list.includes(f)) }))
-    .filter((g) => g.formats.length);
+  const grouped = (list) => {
+    const out = CAT.groups
+      .map((g) => ({ slug: g.slug, name: g.name, formats: g.formats.filter((f) => list.includes(f)) }))
+      .filter((g) => g.formats.length);
+    // Formats outside the visible families (PDF, HTML) go together under "Document"
+    const rest = list.filter((f) => !CAT.groups.some((g) => g.formats.includes(f)));
+    if (rest.length) out.push({ slug: 'document', name: 'Document', formats: rest });
+    return out;
+  };
 
   // ---------- Format picker popover (one shared element) ----------
   const pop = document.createElement('div');
@@ -205,13 +211,15 @@
   const engines = {};
   const isSheet = (fmt) => groupOf(fmt)?.slug === 'spreadsheet';
   const isFont = (fmt) => groupOf(fmt)?.slug === 'font';
+  const isAudio = (fmt) => groupOf(fmt)?.slug === 'audio';
   // Each family of formats has its own engine; each loads only when needed
   const engineFor = (fmt) => {
-    const file = isSheet(fmt) ? 'sheet-engine' : isFont(fmt) ? 'font-engine' : 'engine';
+    const file = isSheet(fmt) ? 'sheet-engine' : isFont(fmt) ? 'font-engine' : isAudio(fmt) ? 'audio-engine' : 'engine';
     return (engines[file] ||= import(`/assets/js/${file}.js`));
   };
   const ACCEPT = {
     image: 'image/*,.heic,.heif,.jfif,.tif,.tiff,.psd,.tga,.ico,.svg,.arw,.cr2,.cr3,.dng,.nef,.orf,.rw2',
+    audio: 'audio/*,.mp3,.wav,.m4a,.aac,.flac,.ogg,.oga,.opus,.aiff,.aif,.amr,.wma,.mp4,.mov,.webm,.mkv,video/mp4,video/quicktime,video/webm',
     font: '.ttf,.otf,.woff,.woff2,.eot,font/ttf,font/otf,font/woff,font/woff2',
     spreadsheet: '.csv,.tsv,.txt,.xlsx,.xlsm,.xls,.ods,.numbers,text/csv,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
   };
@@ -245,7 +253,7 @@
     const o = {
       quality: mode === 'compress' ? 70 : 85, background: '#ffffff', width: '', page: 'fit', merge: true,
       cmode: 'quality', targetKB: 200, format: 'same', rmode: 'px', rw: '', rh: '', percent: 50,
-      sheets: 'all', separator: ',', bom: true,
+      sheets: 'all', separator: ',', bom: true, bitrate: '',
     };
     const seg = (key, choices) => `<div class="seg" role="radiogroup">${choices.map(([v, l]) =>
       `<button type="button" role="radio" aria-checked="${o[key] === v}" data-seg="${key}" data-v="${v}">${l}</button>`).join('')}</div>`;
@@ -264,6 +272,14 @@
           h += `<label class="check"><input type="checkbox" data-opt="bom"${o.bom ? ' checked' : ''}> Excel-friendly (keeps accents and non-English text)</label>`;
         }
         if (to === 'PDF') h += sel('page', 'Page size', [['A4', 'A4'], ['LETTER', 'US Letter']]);
+      } else if (mode === 'convert' && isAudio(from)) {
+        if (['MP3', 'M4A', 'AAC', 'OGG', 'OPUS'].includes(to)) {
+          const def = to === 'OPUS' ? '128' : '192';
+          const cur = o.bitrate || def;
+          const rates = [['96', '96 kbps (small)'], ['128', '128 kbps'], ['192', '192 kbps (recommended)'], ['256', '256 kbps'], ['320', '320 kbps (best)']]
+            .map(([v, l]) => [v, to === 'OPUS' && v === '128' ? '128 kbps (recommended)' : to === 'OPUS' && v === '192' ? '192 kbps' : l]);
+          h += `<label class="field"><span>Quality</span><select data-opt="bitrate">${rates.map(([v, l]) => `<option value="${v}"${cur === v ? ' selected' : ''}>${l}</option>`).join('')}</select></label>`;
+        }
       } else if (mode === 'convert' && isFont(from)) {
         // Fonts need no settings: packing is lossless
       } else if (mode === 'convert') {
@@ -316,7 +332,7 @@
       $('[data-val]', toBtn).textContent = label(to);
       const ready = PAGES.has(slugFor(from, to));
       status.hidden = ready;
-      if (!ready) status.innerHTML = `<span class="badge">Coming soon</span> ${esc(label(from))} to ${esc(label(to))} is not ready yet. Images, spreadsheets and fonts work today; other file types are on the way.`;
+      if (!ready) status.innerHTML = `<span class="badge">Coming soon</span> ${esc(label(from))} to ${esc(label(to))} is not ready yet. This pair is not ready yet. We are adding new formats regularly.`;
       btn.disabled = !ready || busy;
       renderOptions();
       resetDone();
@@ -361,6 +377,13 @@
       return `<a class="btn btn-sm btn-dl" href="${r.url}" download="${esc(r.name)}">${ICON_DL} Download${extra}</a>`;
     };
 
+    const setStatus = (it, text) => {
+      it.statusText = text;
+      const li = list.children[items.indexOf(it)];
+      const chip = li && li.querySelector('.is-working .status-text');
+      if (chip) chip.textContent = text;
+    };
+
     const render = () => {
       const n = items.length;
       list.hidden = n === 0 && !merged;
@@ -399,7 +422,7 @@
         let meta = `${esc(extOf(it.file.name))} · ${fmtSize(it.file.size)}`;
         let right = '';
         if (it.state === 'ready') right = `<span class="file-status">${mode === 'convert' ? `→ ${esc(label(to))}` : 'Ready'}</span>`;
-        if (it.state === 'working') right = '<span class="file-status is-working"><span class="spinner"></span>Working</span>';
+        if (it.state === 'working') right = `<span class="file-status is-working"><span class="spinner"></span><span class="status-text">${esc(it.statusText || 'Working')}</span></span>`;
         if (it.state === 'done' && it.result) {
           const r = it.result;
           const pct = Math.max(-99, Math.round((r.blob.size / it.file.size - 1) * 100));
@@ -459,7 +482,7 @@
       busy = true;
       btn.disabled = true;
       const todo = items.filter((it) => it.state !== 'done');
-      todo.forEach((it) => { it.state = 'working'; it.error = null; });
+      todo.forEach((it) => { it.state = 'working'; it.error = null; it.statusText = null; });
       render();
       const msg = (e) => (e instanceof E.ConvertError ? e.message : 'Something went wrong with this file. It may be damaged or in an unusual variant.');
       const num = (v) => (v === '' || v == null ? undefined : Math.max(1, Math.round(+v)));
@@ -487,6 +510,9 @@
               it.result = await E.resize(it.file, o.rmode === 'pct'
                 ? { percent: num(o.percent) || 100, format: o.format === 'same' ? undefined : o.format }
                 : { width: num(o.rw), height: num(o.rh), format: o.format === 'same' ? undefined : o.format });
+            } else if (isAudio(from)) {
+              if (!E.isLoaded()) setStatus(it, 'Loading converter');
+              it.result = await E.convert(it.file, to, { bitrate: o.bitrate }, (x) => setStatus(it, `Working ${Math.round(x * 100)}%`));
             } else if (isFont(from)) {
               it.result = await E.convert(it.file, to);
             } else if (isSheet(from)) {

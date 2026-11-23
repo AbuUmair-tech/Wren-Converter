@@ -22,6 +22,7 @@ eleventyComputed:
     </nav>
     <h1>{% if tool.from %}{{ tool.from | fmt }} to {{ tool.to | fmt }} Converter{% else %}{{ tool.name }}{% endif %}</h1>
     <p class="lede">{{ tool.summary }}</p>
+    <p class="byline">By <a href="/about/">{{ site.author }}</a> · Updated <time datetime="{{ site.updated }}">{{ site.updatedHuman }}</time></p>
     {%- if tool.from %}{% set dz = { from: tool.from, to: tool.to, slug: tool.slug } %}{% else %}{% set dz = { picker: false, mode: tool.action | lower, verb: tool.action, title: tool.name, icon: ("shrink" if tool.action == "Compress" else "maximize"), slug: tool.slug } %}{% endif %}
     {% include "dropzone.njk" %}
   </div>
@@ -65,43 +66,17 @@ eleventyComputed:
       {{ icon("lock", 20) }}
       <div>
         <strong>Your files stay on your device.</strong>
-        <p>This page converts files with code that runs in your browser. Nothing is uploaded, so it also works with your internet switched off once the page has loaded.</p>
+        <p>This page converts files with code that runs in your browser. Nothing is uploaded. After you have used it once, it even works with your internet switched off.</p>
       </div>
     </div>
 
     <h2>Questions</h2>
-    {%- if tool.from %}
+    {%- for item in tool.faqs %}
     <details>
-      <summary>Is it safe to convert my {{ tool.from | fmt }} files here?</summary>
-      <p>Yes. The conversion runs inside your browser on your own device. Your files are never sent to a server, so nobody else can see them. You can even switch off your internet once this page has loaded.</p>
+      <summary>{{ item.q }}</summary>
+      <p>{{ item.a }}</p>
     </details>
-    <details>
-      <summary>Can I convert many {{ tool.from | fmt }} files at once?</summary>
-      <p>Yes. Add as many as you like, up to 100 at a time, then download them one by one or all together as a ZIP file.</p>
-    </details>
-    <details>
-      <summary>Does it work on my phone?</summary>
-      <p>Yes, on iPhone, iPad and Android. Very large files may take longer on older phones because your phone does the work.</p>
-    </details>
-    {%- elif tool.action == "Compress" %}
-    <details>
-      <summary>How much smaller will my image get?</summary>
-      <p>Photos usually shrink by 50 to 80% at the default quality with no difference you can see. If you need a specific size, for example for an upload form, choose “Target size” and type the limit in KB.</p>
-    </details>
-    <details>
-      <summary>How does PNG compression work?</summary>
-      <p>PNG is lossless, so we make it smaller by reducing the number of colours, the same way tools like TinyPNG do. Most screenshots and graphics look identical with far fewer colours.</p>
-    </details>
-    {%- else %}
-    <details>
-      <summary>Will my image be stretched?</summary>
-      <p>No. If you type both a width and a height, the image is scaled to fit inside that box and keeps its shape. Type just one of them and the other is worked out for you.</p>
-    </details>
-    <details>
-      <summary>Can I resize many images at once?</summary>
-      <p>Yes. Every image you add gets the same settings, and you can download them all as a ZIP.</p>
-    </details>
-    {%- endif %}
+    {%- endfor %}
   </div>
 </article>
 
