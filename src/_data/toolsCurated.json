@@ -1,31 +1,162 @@
 [
-  { "slug": "heic-to-jpg", "category": "image", "from": "HEIC", "to": "JPG", "popular": true,
-    "summary": "Turn iPhone HEIC photos into JPG files that open on Windows, Android and every website. Conversion happens in your browser, so your photos stay on your device." },
-  { "slug": "png-to-jpg", "category": "image", "from": "PNG", "to": "JPG", "popular": true,
-    "summary": "Shrink PNG images into smaller JPG files. Transparent areas are filled with a background colour you choose." },
-  { "slug": "webp-to-jpg", "category": "image", "from": "WEBP", "to": "JPG", "popular": true,
-    "summary": "Save WebP images from the web as JPG so older apps and editors can open them." },
-  { "slug": "jpg-to-png", "category": "image", "from": "JPG", "to": "PNG", "popular": true,
-    "summary": "Convert JPG to lossless PNG, so further edits do not lose any more quality." },
-  { "slug": "jpg-to-pdf", "category": "image", "from": "JPG", "to": "PDF", "popular": true,
-    "summary": "Put one or many JPG images into a single PDF, in the order you choose." },
-  { "slug": "heic-to-png", "category": "image", "from": "HEIC", "to": "PNG", "popular": false,
-    "summary": "Convert iPhone HEIC photos to lossless PNG files." },
-  { "slug": "webp-to-png", "category": "image", "from": "WEBP", "to": "PNG", "popular": true,
-    "summary": "Convert WebP to PNG and keep transparency." },
-  { "slug": "png-to-webp", "category": "image", "from": "PNG", "to": "WEBP", "popular": false,
-    "summary": "Make PNG images smaller for your website by converting them to WebP." },
-  { "slug": "jpg-to-webp", "category": "image", "from": "JPG", "to": "WEBP", "popular": false,
-    "summary": "Convert JPG photos to WebP for faster web pages." },
-  { "slug": "avif-to-jpg", "category": "image", "from": "AVIF", "to": "JPG", "popular": true,
-    "summary": "Open AVIF images anywhere by converting them to JPG." },
-  { "slug": "svg-to-png", "category": "image", "from": "SVG", "to": "PNG", "popular": true,
-    "summary": "Render SVG graphics as PNG at any size you need." },
-  { "slug": "png-to-ico", "category": "image", "from": "PNG", "to": "ICO", "popular": false,
-    "summary": "Make a favicon or Windows icon from a PNG image." },
-
-  { "slug": "compress-image", "category": "image", "action": "Compress", "name": "Image Compressor", "popular": true,
-    "summary": "Make JPG, PNG and WebP images smaller while keeping them sharp. Pick a target size in KB or a quality level." },
-  { "slug": "resize-image", "category": "image", "action": "Resize", "name": "Image Resizer", "popular": true,
-    "summary": "Change the width and height of images in pixels or percent, one at a time or in bulk." }
+  {
+    "slug": "heic-to-jpg",
+    "category": "image",
+    "from": "HEIC",
+    "to": "JPG",
+    "popular": true,
+    "summary": "Turn iPhone HEIC photos into JPG files that open on Windows, Android and every website. Conversion happens in your browser, so your photos stay on your device."
+  },
+  {
+    "slug": "png-to-jpg",
+    "category": "image",
+    "from": "PNG",
+    "to": "JPG",
+    "popular": true,
+    "summary": "Shrink PNG images into smaller JPG files. Transparent areas are filled with a background colour you choose."
+  },
+  {
+    "slug": "webp-to-jpg",
+    "category": "image",
+    "from": "WEBP",
+    "to": "JPG",
+    "popular": true,
+    "summary": "Save WebP images from the web as JPG so older apps and editors can open them."
+  },
+  {
+    "slug": "jpg-to-png",
+    "category": "image",
+    "from": "JPG",
+    "to": "PNG",
+    "popular": true,
+    "summary": "Convert JPG to lossless PNG, so further edits do not lose any more quality."
+  },
+  {
+    "slug": "jpg-to-pdf",
+    "category": "image",
+    "from": "JPG",
+    "to": "PDF",
+    "popular": true,
+    "summary": "Put one or many JPG images into a single PDF, in the order you choose."
+  },
+  {
+    "slug": "heic-to-png",
+    "category": "image",
+    "from": "HEIC",
+    "to": "PNG",
+    "popular": false,
+    "summary": "Convert iPhone HEIC photos to lossless PNG files."
+  },
+  {
+    "slug": "webp-to-png",
+    "category": "image",
+    "from": "WEBP",
+    "to": "PNG",
+    "popular": true,
+    "summary": "Convert WebP to PNG and keep transparency."
+  },
+  {
+    "slug": "png-to-webp",
+    "category": "image",
+    "from": "PNG",
+    "to": "WEBP",
+    "popular": false,
+    "summary": "Make PNG images smaller for your website by converting them to WebP."
+  },
+  {
+    "slug": "jpg-to-webp",
+    "category": "image",
+    "from": "JPG",
+    "to": "WEBP",
+    "popular": false,
+    "summary": "Convert JPG photos to WebP for faster web pages."
+  },
+  {
+    "slug": "avif-to-jpg",
+    "category": "image",
+    "from": "AVIF",
+    "to": "JPG",
+    "popular": true,
+    "summary": "Open AVIF images anywhere by converting them to JPG."
+  },
+  {
+    "slug": "svg-to-png",
+    "category": "image",
+    "from": "SVG",
+    "to": "PNG",
+    "popular": true,
+    "summary": "Render SVG graphics as PNG at any size you need."
+  },
+  {
+    "slug": "png-to-ico",
+    "category": "image",
+    "from": "PNG",
+    "to": "ICO",
+    "popular": false,
+    "summary": "Make a favicon or Windows icon from a PNG image."
+  },
+  {
+    "slug": "compress-image",
+    "category": "image",
+    "action": "Compress",
+    "name": "Image Compressor",
+    "popular": true,
+    "summary": "Make JPG, PNG and WebP images smaller while keeping them sharp. Pick a target size in KB or a quality level."
+  },
+  {
+    "slug": "resize-image",
+    "category": "image",
+    "action": "Resize",
+    "name": "Image Resizer",
+    "popular": true,
+    "summary": "Change the width and height of images in pixels or percent, one at a time or in bulk."
+  },
+  {
+    "slug": "xlsx-to-csv",
+    "category": "spreadsheet",
+    "from": "XLSX",
+    "to": "CSV",
+    "popular": true,
+    "summary": "Save Excel sheets as CSV for importing into other apps, databases and online tools. Workbooks with several sheets give one CSV per sheet."
+  },
+  {
+    "slug": "csv-to-xlsx",
+    "category": "spreadsheet",
+    "from": "CSV",
+    "to": "XLSX",
+    "popular": true,
+    "summary": "Open a CSV as a proper Excel workbook. Numbers stay numbers, while IDs and phone numbers with leading zeros are kept exactly as they are."
+  },
+  {
+    "slug": "xls-to-xlsx",
+    "category": "spreadsheet",
+    "from": "XLS",
+    "to": "XLSX",
+    "popular": true,
+    "summary": "Upgrade old Excel 97\u20132003 XLS files to the modern XLSX format, with every sheet, formula and value carried over."
+  },
+  {
+    "slug": "xlsx-to-pdf",
+    "category": "spreadsheet",
+    "from": "XLSX",
+    "to": "PDF",
+    "popular": true,
+    "summary": "Turn Excel sheets into a tidy PDF table you can print or send. Wide sheets switch to landscape automatically."
+  },
+  {
+    "slug": "ods-to-xlsx",
+    "category": "spreadsheet",
+    "from": "ODS",
+    "to": "XLSX",
+    "popular": true,
+    "summary": "Convert LibreOffice and OpenOffice spreadsheets to Excel XLSX so anyone with Excel can open them."
+  },
+  {
+    "slug": "numbers-to-xlsx",
+    "category": "spreadsheet",
+    "from": "NUMBERS",
+    "to": "XLSX",
+    "popular": true,
+    "summary": "Open Apple Numbers spreadsheets in Excel or Google Sheets by converting them to XLSX, without needing a Mac."
+  }
 ]

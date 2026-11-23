@@ -36,7 +36,11 @@
   const label = (f) => LABELS[f] || f;
   const groupOf = (f) => CAT.groups.find((g) => g.formats.includes(f));
   const slugFor = (a, b) => `${a}-to-${b}`.toLowerCase().replace(/\./g, '');
-  const PREFERRED = ['JPG', 'PNG', 'PDF', 'MP3', 'MP4', 'XLSX', 'CSV', 'WOFF2', 'TTF', 'DOCX', 'EPUB', 'ZIP'];
+  // What most people want when they start from a format in each family
+  const PREFERRED = {
+    image: ['JPG', 'PNG'], spreadsheet: ['XLSX', 'CSV'], font: ['WOFF2', 'TTF'], audio: ['MP3', 'WAV'], video: ['MP4', 'MP3'],
+    document: ['PDF', 'DOCX'], presentation: ['PDF'], ebook: ['EPUB', 'PDF'], vector: ['SVG', 'PNG'], archive: ['ZIP'],
+  };
 
   const targetsFor = (from) => {
     if (from === 'PDF') return CAT.pdfTargets.slice();
@@ -49,7 +53,7 @@
   const bestTarget = (from, current) => {
     const t = targetsFor(from);
     if (t.includes(current)) return current;
-    return PREFERRED.find((f) => t.includes(f)) || t[0];
+    return (PREFERRED[groupOf(from)?.slug] || []).find((f) => t.includes(f)) || t[0];
   };
   // Group a flat list of formats by catalog group, in catalog order
   const grouped = (list) => CAT.groups
@@ -193,13 +197,22 @@
   const fmtSize = (b) => (b < 1024 * 1024 ? `${Math.max(1, Math.round(b / 1024))} KB` : `${(b / 1024 / 1024).toFixed(1)} MB`);
   const extOf = (name) => {
     const e = (name.includes('.') ? name.split('.').pop() : '').toUpperCase();
-    return ({ JPEG: 'JPG', JPE: 'JPG', TIF: 'TIFF', HIF: 'HEIF' })[e] || e.slice(0, 5) || 'FILE';
+    return ({ JPEG: 'JPG', JPE: 'JPG', TIF: 'TIFF', HIF: 'HEIF' })[e] || e.slice(0, 7) || 'FILE';
   };
   const NO_ALPHA = new Set(['JPG', 'JFIF', 'BMP', 'PDF']);
   const LOSSY = new Set(['JPG', 'JFIF', 'WEBP', 'AVIF']);
   const THUMBABLE = /^image\/(png|jpe?g|gif|webp|avif|bmp|svg\+xml|x-icon|vnd\.microsoft\.icon)$/;
-  let enginePromise;
-  const engine = () => (enginePromise ||= import('/assets/js/engine.js'));
+  const engines = {};
+  const isSheet = (fmt) => groupOf(fmt)?.slug === 'spreadsheet';
+  // Spreadsheets and images have separate engines; each loads only when needed
+  const engineFor = (fmt) => {
+    const file = isSheet(fmt) ? 'sheet-engine' : 'engine';
+    return (engines[file] ||= import(`/assets/js/${file}.js`));
+  };
+  const ACCEPT = {
+    image: 'image/*,.heic,.heif,.jfif,.tif,.tiff,.psd,.tga,.ico,.svg,.arw,.cr2,.cr3,.dng,.nef,.orf,.rw2',
+    spreadsheet: '.csv,.tsv,.txt,.xlsx,.xlsm,.xls,.ods,.numbers,text/csv,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+  };
   const converters = $$('[data-converter]');
   const ICON_DL = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v12M7 11l5 5 5-5M4 20h16"/></svg>';
   const ICON_X = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>';
@@ -230,6 +243,7 @@
     const o = {
       quality: mode === 'compress' ? 70 : 85, background: '#ffffff', width: '', page: 'fit', merge: true,
       cmode: 'quality', targetKB: 200, format: 'same', rmode: 'px', rw: '', rh: '', percent: 50,
+      sheets: 'all', separator: ',', bom: true,
     };
     const seg = (key, choices) => `<div class="seg" role="radiogroup">${choices.map(([v, l]) =>
       `<button type="button" role="radio" aria-checked="${o[key] === v}" data-seg="${key}" data-v="${v}">${l}</button>`).join('')}</div>`;
@@ -239,7 +253,16 @@
 
     const renderOptions = () => {
       let h = '';
-      if (mode === 'convert') {
+      if (mode === 'convert' && isSheet(from)) {
+        const sel = (key, label, choices) => `<label class="field"><span>${label}</span><select data-opt="${key}">${choices.map(([v, l]) =>
+          `<option value="${v}"${o[key] === v ? ' selected' : ''}>${l}</option>`).join('')}</select></label>`;
+        if (from !== 'CSV' && from !== 'TSV') h += sel('sheets', 'Sheets', [['all', 'All sheets'], ['first', 'First sheet only']]);
+        if (to === 'CSV') {
+          h += sel('separator', 'Separator', [[',', 'Comma ,'], [';', 'Semicolon ;'], ['|', 'Pipe |']]);
+          h += `<label class="check"><input type="checkbox" data-opt="bom"${o.bom ? ' checked' : ''}> Excel-friendly (keeps accents and non-English text)</label>`;
+        }
+        if (to === 'PDF') h += sel('page', 'Page size', [['A4', 'A4'], ['LETTER', 'US Letter']]);
+      } else if (mode === 'convert') {
         if (LOSSY.has(to)) h += qualityField;
         if (to === 'PDF') {
           h += `<label class="field"><span>Page size</span><select data-opt="page">
@@ -283,12 +306,13 @@
 
     // ---- format pair ----
     const updatePair = () => {
+      input.accept = ACCEPT[groupOf(from)?.slug] || ACCEPT.image;
       if (!fromBtn) return;
       $('[data-val]', fromBtn).textContent = label(from);
       $('[data-val]', toBtn).textContent = label(to);
       const ready = PAGES.has(slugFor(from, to));
       status.hidden = ready;
-      if (!ready) status.innerHTML = `<span class="badge">Coming soon</span> ${esc(label(from))} to ${esc(label(to))} is not ready yet. Images work today; other file types are on the way.`;
+      if (!ready) status.innerHTML = `<span class="badge">Coming soon</span> ${esc(label(from))} to ${esc(label(to))} is not ready yet. Images and spreadsheets work today; other file types are on the way.`;
       btn.disabled = !ready || busy;
       renderOptions();
       resetDone();
@@ -350,7 +374,7 @@
       if (allDone) {
         const before = items.filter((i) => i.state === 'done').reduce((a, i) => a + i.file.size, 0);
         const after = merged ? merged.blob.size : items.filter((i) => i.state === 'done').reduce((a, i) => a + i.result.blob.size, 0);
-        const pct = before ? Math.round((after / before - 1) * 100) : 0;
+        const pct = before ? Math.max(-99, Math.round((after / before - 1) * 100)) : 0;
         resultsSummary.innerHTML = `<strong>${merged ? 1 : done} ${(merged ? 1 : done) === 1 ? 'file' : 'files'} ready.</strong> ${fmtSize(before)} → ${fmtSize(after)}${pct ? ` <span class="delta ${pct < 0 ? 'down' : 'up'}">${pct > 0 ? '+' : ''}${pct}%</span>` : ''}${failed ? ` · ${failed} failed` : ''}`;
       }
 
@@ -367,8 +391,8 @@
         if (it.state === 'working') right = '<span class="file-status is-working"><span class="spinner"></span>Working</span>';
         if (it.state === 'done' && it.result) {
           const r = it.result;
-          const pct = Math.round((r.blob.size / it.file.size - 1) * 100);
-          meta = `${esc(extOf(it.file.name))} ${fmtSize(it.file.size)} → <strong>${esc(extOf(r.name))} ${fmtSize(r.blob.size)}</strong>${pct ? ` <span class="delta ${pct < 0 ? 'down' : 'up'}">${pct > 0 ? '+' : ''}${pct}%</span>` : ''}${r.width ? ` · ${r.width}×${r.height}` : ''}${r.unchanged ? ' · already as small as it gets' : ''}`;
+          const pct = Math.max(-99, Math.round((r.blob.size / it.file.size - 1) * 100));
+          meta = `${esc(extOf(it.file.name))} ${fmtSize(it.file.size)} → <strong>${esc(extOf(r.name))} ${fmtSize(r.blob.size)}</strong>${pct ? ` <span class="delta ${pct < 0 ? 'down' : 'up'}">${pct > 0 ? '+' : ''}${pct}%</span>` : ''}${r.width ? ` · ${r.width}×${r.height}` : ''}${r.sheets > 1 ? ` · ${r.sheets} sheets` : ''}${r.unchanged ? ' · already as small as it gets' : ''}`;
           right = resultRow(r);
         }
         if (it.state === 'done' && !it.result) right = '<span class="file-status">Added to PDF</span>';
@@ -402,7 +426,7 @@
         if (ext !== from && groupOf(ext)) { from = ext; to = bestTarget(from, to); updatePair(); }
       }
       // Fetch the converter code while the visitor is still choosing options
-      engine().then((E) => { E.preload(from); E.preload(to); incoming.forEach((f) => E.preload(extOf(f.name))); }).catch(() => {});
+      engineFor(from).then((E) => { E.preload(from); E.preload(to); incoming.forEach((f) => E.preload(extOf(f.name))); }).catch(() => {});
       renderOptions();
       render();
     };
@@ -420,7 +444,7 @@
     const run = async () => {
       if (busy || !items.length) return;
       let E;
-      try { E = await engine(); } catch (e) { toast('The converter could not load. Check your connection and reload the page.'); return; }
+      try { E = await engineFor(mode === 'convert' ? from : 'JPG'); } catch (e) { toast('The converter could not load. Check your connection and reload the page.'); return; }
       busy = true;
       btn.disabled = true;
       const todo = items.filter((it) => it.state !== 'done');
@@ -429,7 +453,7 @@
       const msg = (e) => (e instanceof E.ConvertError ? e.message : 'Something went wrong with this file. It may be damaged or in an unusual variant.');
       const num = (v) => (v === '' || v == null ? undefined : Math.max(1, Math.round(+v)));
 
-      if (mode === 'convert' && to === 'PDF') {
+      if (mode === 'convert' && to === 'PDF' && !isSheet(from)) {
         const out = await E.toPdf(todo.map((it) => it.file), { page: o.page, merge: o.merge && todo.length > 1 }, (i, err) => {
           if (err) { todo[i].state = 'error'; todo[i].error = msg(err); console.error(err); }
         });
@@ -452,6 +476,8 @@
               it.result = await E.resize(it.file, o.rmode === 'pct'
                 ? { percent: num(o.percent) || 100, format: o.format === 'same' ? undefined : o.format }
                 : { width: num(o.rw), height: num(o.rh), format: o.format === 'same' ? undefined : o.format });
+            } else if (isSheet(from)) {
+              it.result = await E.convert(it.file, to, { sheets: o.sheets, separator: o.separator, bom: o.bom, page: o.page === 'fit' ? 'A4' : o.page });
             } else {
               it.result = await E.convert(it.file, to, { quality: o.quality / 100, background: o.background, width: num(o.width) });
             }
@@ -478,7 +504,7 @@
       const b = e.currentTarget;
       b.disabled = true;
       try {
-        const E = await engine();
+        const E = await engineFor('JPG');
         const blob = await E.zip(items.filter((it) => it.state === 'done' && it.result).map((it) => it.result));
         const a = document.createElement('a');
         a.href = URL.createObjectURL(blob);

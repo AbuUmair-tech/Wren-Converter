@@ -21,9 +21,9 @@ eleventyComputed:
         <h1>{{ cat.title }}</h1>
         <p class="lede">{{ cat.blurb }} Everything runs in your browser, so your files are never uploaded.</p>
       </div>
-      {%- if cat.phase == 1 %}
+      {%- if cat.live %}
       <div>
-        {%- set dz = { from: "PNG", to: "JPG" } %}
+        {%- set dz = { from: cat.demo[0], to: cat.demo[1] } %}
         {% include "dropzone.njk" %}
       </div>
       {%- endif %}

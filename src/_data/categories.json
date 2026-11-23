@@ -1,35 +1,177 @@
 [
-  { "slug": "image", "name": "Image", "title": "Image Converter", "phase": 1, "formats": 43, "icon": "image",
+  {
+    "slug": "image",
+    "name": "Image",
+    "title": "Image Converter",
+    "phase": 1,
+    "formats": 43,
+    "icon": "image",
     "blurb": "HEIC, PNG, JPG, WebP, AVIF, GIF, SVG and more. Compress and resize too.",
-    "examples": ["HEIC", "PNG", "JPG", "WebP", "AVIF", "SVG"] },
-  { "slug": "spreadsheet", "name": "Spreadsheet", "title": "Spreadsheet Converter", "phase": 2, "formats": 8, "icon": "table",
-    "blurb": "Excel, CSV and OpenDocument sheets, converted with formulas left intact where possible.",
-    "examples": ["XLSX", "CSV", "ODS", "XLS"] },
-  { "slug": "font", "name": "Font", "title": "Font Converter", "phase": 3, "formats": 5, "icon": "type",
+    "examples": [
+      "HEIC",
+      "PNG",
+      "JPG",
+      "WebP",
+      "AVIF",
+      "SVG"
+    ],
+    "live": true,
+    "demo": [
+      "PNG",
+      "JPG"
+    ]
+  },
+  {
+    "slug": "spreadsheet",
+    "name": "Spreadsheet",
+    "title": "Spreadsheet Converter",
+    "phase": 2,
+    "formats": 8,
+    "icon": "table",
+    "blurb": "Excel, CSV, OpenDocument and Apple Numbers. Every sheet comes across, and you can export to PDF too.",
+    "examples": [
+      "XLSX",
+      "CSV",
+      "XLS",
+      "ODS",
+      "NUMBERS"
+    ],
+    "live": true,
+    "demo": [
+      "XLSX",
+      "CSV"
+    ]
+  },
+  {
+    "slug": "font",
+    "name": "Font",
+    "title": "Font Converter",
+    "phase": 3,
+    "formats": 5,
+    "icon": "type",
     "blurb": "Turn desktop fonts into web fonts and back again.",
-    "examples": ["TTF", "OTF", "WOFF", "WOFF2"] },
-  { "slug": "audio", "name": "Audio", "title": "Audio Converter", "phase": 4, "formats": 21, "icon": "music",
+    "examples": [
+      "TTF",
+      "OTF",
+      "WOFF",
+      "WOFF2"
+    ]
+  },
+  {
+    "slug": "audio",
+    "name": "Audio",
+    "title": "Audio Converter",
+    "phase": 4,
+    "formats": 21,
+    "icon": "music",
     "blurb": "MP3, WAV, M4A, FLAC, OGG. Pull the audio out of a video too.",
-    "examples": ["MP3", "WAV", "M4A", "FLAC", "OGG"] },
-  { "slug": "video", "name": "Video", "title": "Video Converter", "phase": 5, "formats": 28, "icon": "film",
+    "examples": [
+      "MP3",
+      "WAV",
+      "M4A",
+      "FLAC",
+      "OGG"
+    ]
+  },
+  {
+    "slug": "video",
+    "name": "Video",
+    "title": "Video Converter",
+    "phase": 5,
+    "formats": 28,
+    "icon": "film",
     "blurb": "MP4, MOV, WebM and more, for clips small enough to handle in a browser.",
-    "examples": ["MP4", "MOV", "WebM", "MKV"] },
-  { "slug": "archive", "name": "Archive", "title": "Archive Converter", "phase": 5, "formats": 39, "icon": "archive",
+    "examples": [
+      "MP4",
+      "MOV",
+      "WebM",
+      "MKV"
+    ]
+  },
+  {
+    "slug": "archive",
+    "name": "Archive",
+    "title": "Archive Converter",
+    "phase": 5,
+    "formats": 39,
+    "icon": "archive",
     "blurb": "Open and repack ZIP, TAR, 7Z and RAR archives.",
-    "examples": ["ZIP", "7Z", "TAR", "RAR"] },
-  { "slug": "pdf", "name": "PDF", "title": "PDF Tools", "phase": 5, "formats": 6, "icon": "file",
+    "examples": [
+      "ZIP",
+      "7Z",
+      "TAR",
+      "RAR"
+    ]
+  },
+  {
+    "slug": "pdf",
+    "name": "PDF",
+    "title": "PDF Tools",
+    "phase": 5,
+    "formats": 6,
+    "icon": "file",
     "blurb": "Images to PDF, PDF to images, merge and split.",
-    "examples": ["PDF", "JPG", "PNG"] },
-  { "slug": "vector", "name": "Vector", "title": "Vector Converter", "phase": 5, "formats": 10, "icon": "pen",
+    "examples": [
+      "PDF",
+      "JPG",
+      "PNG"
+    ]
+  },
+  {
+    "slug": "vector",
+    "name": "Vector",
+    "title": "Vector Converter",
+    "phase": 5,
+    "formats": 10,
+    "icon": "pen",
     "blurb": "SVG to raster and back, plus common vector formats.",
-    "examples": ["SVG", "EPS", "EMF"] },
-  { "slug": "document", "name": "Document", "title": "Document Converter", "phase": 6, "formats": 23, "icon": "doc",
+    "examples": [
+      "SVG",
+      "EPS",
+      "EMF"
+    ]
+  },
+  {
+    "slug": "document",
+    "name": "Document",
+    "title": "Document Converter",
+    "phase": 6,
+    "formats": 23,
+    "icon": "doc",
     "blurb": "Word, ODT, RTF and plain text.",
-    "examples": ["DOCX", "ODT", "RTF", "TXT"] },
-  { "slug": "ebook", "name": "E-book", "title": "E-book Converter", "phase": 6, "formats": 22, "icon": "book",
+    "examples": [
+      "DOCX",
+      "ODT",
+      "RTF",
+      "TXT"
+    ]
+  },
+  {
+    "slug": "ebook",
+    "name": "E-book",
+    "title": "E-book Converter",
+    "phase": 6,
+    "formats": 22,
+    "icon": "book",
     "blurb": "EPUB, MOBI, AZW3 and friends.",
-    "examples": ["EPUB", "MOBI", "AZW3"] },
-  { "slug": "presentation", "name": "Presentation", "title": "Presentation Converter", "phase": 6, "formats": 11, "icon": "slides",
+    "examples": [
+      "EPUB",
+      "MOBI",
+      "AZW3"
+    ]
+  },
+  {
+    "slug": "presentation",
+    "name": "Presentation",
+    "title": "Presentation Converter",
+    "phase": 6,
+    "formats": 11,
+    "icon": "slides",
     "blurb": "PowerPoint and Keynote decks to PDF and images.",
-    "examples": ["PPTX", "KEY", "ODP"] }
+    "examples": [
+      "PPTX",
+      "KEY",
+      "ODP"
+    ]
+  }
 ]

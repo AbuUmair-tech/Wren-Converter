@@ -62,6 +62,14 @@
         </ul>
       </div>
       <div>
+        <h2>Spreadsheet</h2>
+        <ul>
+          {%- for t in tools | inCategory("spreadsheet") | where("popular", true) %}
+          <li><a href="/{{ t.slug }}/">{{ t | toolName }}</a></li>
+          {%- endfor %}
+        </ul>
+      </div>
+      <div>
         <h2>Converters</h2>
         <ul>
           {%- for cat in categories %}{% if cat.phase <= 4 %}

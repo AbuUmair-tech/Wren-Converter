@@ -9,7 +9,7 @@ const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const out = join(root, 'src/assets/vendor');
 mkdirSync(out, { recursive: true });
 
-const entries = ['heic', 'utif', 'psd', 'gif', 'pdf', 'zip', 'pako', 'avif', 'webp'];
+const entries = ['heic', 'utif', 'psd', 'gif', 'pdf', 'zip', 'pako', 'avif', 'webp', 'xlsx'];
 const stamp = join(out, '.built');
 const lock = statSync(join(root, 'package-lock.json')).mtimeMs;
 if (existsSync(stamp) && statSync(stamp).mtimeMs > lock && process.argv[2] !== '--force') {

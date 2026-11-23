@@ -34,6 +34,13 @@
     "best": "Editing photos from newer Canon cameras",
     "support": "Recent RAW editors"
   },
+  "CSV": {
+    "full": "Comma-Separated Values",
+    "by": "Long-standing convention, written down as RFC 4180 in 2005",
+    "type": "Plain text, one sheet, values only",
+    "best": "Importing data into other apps and databases",
+    "support": "Every spreadsheet and database app"
+  },
   "DNG": {
     "full": "Digital Negative",
     "by": "Adobe, 2004",
@@ -62,6 +69,13 @@
     "best": "Photos from newer phones and cameras",
     "support": "Limited outside Apple"
   },
+  "HTML": {
+    "full": "HyperText Markup Language",
+    "by": "W3C",
+    "type": "Web page",
+    "best": "Showing a table on a website or in an email",
+    "support": "Every browser"
+  },
   "ICO": {
     "full": "Windows Icon",
     "by": "Microsoft",
@@ -89,6 +103,20 @@
     "type": "Camera RAW",
     "best": "Editing photos from Nikon cameras",
     "support": "RAW editors"
+  },
+  "NUMBERS": {
+    "full": "Apple Numbers Spreadsheet",
+    "by": "Apple, 2007",
+    "type": "Sheets with free-floating tables",
+    "best": "Spreadsheets on Mac, iPhone and iPad",
+    "support": "Apple devices and iCloud only"
+  },
+  "ODS": {
+    "full": "OpenDocument Spreadsheet",
+    "by": "OASIS, 2005",
+    "type": "Open standard, sheets and formulas",
+    "best": "LibreOffice and OpenOffice",
+    "support": "LibreOffice, Excel, Google Sheets"
   },
   "ORF": {
     "full": "Olympus RAW Format",
@@ -146,11 +174,39 @@
     "best": "Printing, scanning and archiving",
     "support": "Photo editors and print shops; not browsers"
   },
+  "TSV": {
+    "full": "Tab-Separated Values",
+    "by": "Long-standing convention",
+    "type": "Plain text, one sheet, values only",
+    "best": "Data with commas inside the values",
+    "support": "Spreadsheets, databases and code"
+  },
   "WEBP": {
     "full": "WebP",
     "by": "Google, 2010",
     "type": "Lossy or lossless, transparency",
     "best": "Web pages that need small images",
     "support": "All modern browsers, some older apps lack it"
+  },
+  "XLS": {
+    "full": "Excel 97\u20132003 Workbook",
+    "by": "Microsoft, 1997",
+    "type": "Binary, max 65,536 rows \u00d7 256 columns",
+    "best": "Very old Excel versions and legacy software",
+    "support": "Most spreadsheet apps"
+  },
+  "XLSM": {
+    "full": "Excel Macro-Enabled Workbook",
+    "by": "Microsoft, 2007",
+    "type": "XLSX that can carry VBA macros",
+    "best": "Workbooks with macros",
+    "support": "Excel on Windows and Mac; macros do not run elsewhere"
+  },
+  "XLSX": {
+    "full": "Excel Open XML Workbook",
+    "by": "Microsoft, 2007",
+    "type": "Sheets, formulas, formatting",
+    "best": "Everyday spreadsheets",
+    "support": "Excel, Google Sheets, Numbers, LibreOffice"
   }
 }

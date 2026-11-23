@@ -16,7 +16,7 @@ function targetsFor(from) {
 }
 
 // Categories whose converters run today
-const LIVE = ['image'];
+const LIVE = ['image', 'spreadsheet'];
 
 const RAW = ['ARW', 'CR2', 'CR3', 'DNG', 'NEF', 'ORF', 'RW2'];
 const ALPHA = ['PNG', 'WEBP', 'AVIF', 'GIF', 'TIFF', 'TGA', 'ICO', 'SVG', 'PSD', 'HEIC', 'HEIF'];
@@ -24,6 +24,12 @@ const NO_ALPHA = ['JPG', 'JFIF', 'BMP', 'PDF'];
 
 function summary(from, to) {
   const F = label(from), T = label(to);
+  if (groupOf(from).slug === 'spreadsheet') {
+    if (to === 'PDF') return `Turn ${F} spreadsheets into a PDF table you can print or share. Converted in your browser; the file is never uploaded.`;
+    if (to === 'HTML') return `Turn a ${F} spreadsheet into a web page table you can open in any browser or paste into a website.`;
+    if (to === 'CSV' || to === 'TSV') return `Save ${F} sheets as ${T} plain text for importing into other apps and databases. Free, private, no upload.`;
+    return `Convert ${F} spreadsheets to ${T} in your browser, with every sheet carried over. Free, no sign-up, never uploaded.`;
+  }
   if (RAW.includes(from)) return `Turn ${F} camera RAW files into ${T} without photo software. Your files are converted inside your browser and never uploaded.`;
   if (to === 'PDF') return `Put one or many ${F} images into a PDF, one image per page. Everything happens in your browser, so nothing is uploaded.`;
   if (to === 'ICO') return `Make a Windows icon or favicon from a ${F} image, with all the standard sizes from 16 to 256 pixels in one file.`;
@@ -54,6 +60,20 @@ function notes(t) {
   if (!t.from) return [];
   const { from, to } = t; const F = label(from), T = label(to);
   const n = [];
+  if (t.category === 'spreadsheet') {
+    const BOOKS = ['XLSX', 'XLSM', 'XLS', 'ODS'];
+    if (from === 'CSV' || from === 'TSV') n.push(`We detect whether your ${F} uses commas, semicolons or tabs. Plain numbers become real numbers, while values with leading zeros, like 00123 or phone numbers, stay exactly as written.`);
+    if (from === 'NUMBERS') n.push(`Works with files from Numbers 3 and later. Values come across; formulas arrive as their results, and colours and charts are not kept.`);
+    if (to === 'CSV' || to === 'TSV') n.push(`${T} holds plain values for a single sheet: formulas become their results, and colours, fonts and charts are dropped. A workbook with several sheets gives one ${T} per sheet, delivered together in a ZIP, or choose “First sheet only”.`);
+    if (to === 'CSV') n.push(`Keep “Excel-friendly” ticked so Excel shows accents and non-English text correctly. Pick “Semicolon” if your Excel uses commas for decimals, as in much of Europe.`);
+    if (BOOKS.includes(from) && BOOKS.includes(to)) n.push(`Sheets, cell values, ${to === 'XLS' ? '' : 'formulas, '}number formats, merged cells and column widths carry over. Colours, fonts, borders, charts, images and pivot tables are not kept.`);
+    if (to === 'XLS') n.push(`XLS is the Excel 97–2003 format and is limited to 65,536 rows and 256 columns. Formulas are saved as their results, so the numbers are right but will not recalculate. Only use XLS for old software that cannot open XLSX.`);
+    if (from === 'XLSM' && to !== 'XLSM') n.push(`Macros cannot be stored in ${T}, so they are left out. Everything else in the workbook comes across.`);
+    if (to === 'XLSM' && from !== 'XLSM') n.push(`Converting does not add macros; the workbook is simply saved in the macro-enabled format.`);
+    if (to === 'PDF') n.push(`Each sheet is laid out as a table on A4 or US Letter pages, switching to landscape for wide sheets. The PDF shows the sheet as a picture of the table, so its text cannot be selected or searched.`);
+    if (to === 'HTML') n.push(`You get one web page with a table for each sheet. Open it in any browser, or copy the table into a website or email.`);
+    return n;
+  }
   if (RAW.includes(from)) n.push(`Cameras store a full-size JPEG preview inside every ${F} file. We convert that preview, which already has your camera's colour and white balance applied. If you need full RAW editing (exposure recovery, 16-bit output), use a RAW editor like Lightroom or darktable.`);
   if (from === 'HEIC' || from === 'HEIF') n.push(`${F} is what iPhones save photos as by default. Photos are turned the right way up automatically, using the orientation your phone recorded.`);
   if (from === 'PSD') n.push(`We use the flattened image Photoshop saves inside the file, so you get exactly what you see in Photoshop with all layers merged. If you get an error, re-save the file with “Maximize compatibility” turned on.`);

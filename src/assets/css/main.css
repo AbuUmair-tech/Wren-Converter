@@ -607,3 +607,10 @@ tbody th { font-weight: 600; color: var(--muted); white-space: nowrap; }
 .notes li::before { content: 'i'; position: absolute; left: 14px; top: 14px; display: grid; place-items: center; width: 20px; height: 20px; border-radius: 50%; background: var(--accent-soft); color: var(--accent-ink); font: 700 .75rem/1 Georgia, serif; font-style: italic; }
 .fmt-heif { background: #5b6b8c; } .fmt-jfif { background: #c0692f; } .fmt-tiff { background: #5d6f78; }
 .fmt-bmp { background: #6b7d8a; } .fmt-tga { background: #7a5c8a; } .fmt-psd { background: #2f5d9a; } .fmt-gif { background: #8a7a2f; }
+
+.badge-live { background: var(--safe-soft); color: var(--safe); }
+.footer-grid { grid-template-columns: 1.5fr 1fr 1fr 1fr 1fr; }
+@media (max-width: 980px) { .footer-grid { grid-template-columns: 1fr 1fr 1fr; } .footer-brand { grid-column: 1 / -1; } }
+@media (max-width: 560px) { .footer-grid { grid-template-columns: 1fr 1fr; } }
+.fmt-csv { background: #2f7d55; } .fmt-tsv { background: #3f7d6a; } .fmt-xlsx { background: #1f7244; } .fmt-xlsm { background: #2a6b4a; }
+.fmt-xls { background: #4f7a3a; } .fmt-ods { background: #3f6fa0; } .fmt-numbers { background: #3a9a5b; } .fmt-html { background: #c2572f; }
